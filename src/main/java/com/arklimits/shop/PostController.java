@@ -15,7 +15,6 @@ public class PostController {
     @GetMapping("/notice")
     String notice(Model model){
         List<Post> posts = postRepository.findAll();
-        System.out.println(posts);
         model.addAttribute("posts", posts);
         return "notice.html";
     }
