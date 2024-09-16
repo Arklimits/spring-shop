@@ -1,0 +1,21 @@
+spring:
+  # .env import
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: shop
+
+  # database connection
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_ID}
+    password: ${DB_PW}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # jpa setting
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        ddl-auto: update
