@@ -13,10 +13,10 @@ public class ItemController {
     private final ItemRepository itemRepository;
 
     @GetMapping("/list")
-    String list(Model model){
+    String list(Model model) {
         List<Item> result = itemRepository.findAll();
+        model.addAttribute("items", result);
 
-        model.addAttribute("name", "팬티");
         return "list.html";
     }
 }
