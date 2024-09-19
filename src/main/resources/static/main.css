@@ -46,6 +46,17 @@ input {
     margin-right: 20px;
 }
 
+.detail {
+    text-align : center;
+}
+.detail img{
+    max-width : 30%;
+    display : block;
+    margin : auto;
+}
+
+/* table css */
+
 .tg {
     border-collapse: collapse;
     border-color: #bbb;
