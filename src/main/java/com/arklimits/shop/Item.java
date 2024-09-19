@@ -1,11 +1,12 @@
 package com.arklimits.shop;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class Item {
     @Id
@@ -13,8 +14,10 @@ public class Item {
     private Long id;
 
     @Column(nullable = false)
+    @NonNull
     private String title;
 
     @Column(nullable = false)
+    @NonNull
     private Integer price;
 }
