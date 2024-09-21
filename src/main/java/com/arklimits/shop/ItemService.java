@@ -18,4 +18,14 @@ public class ItemService {
     public Optional<Item> findItemById(Long id) {
         return itemRepository.findById(id);
     }
+
+    public void editItem(Long id, String title, Integer price){
+        Optional<Item> optionalItem = itemRepository.findById(id);
+        if(optionalItem.isPresent()){
+            Item item = optionalItem.get();
+            item.setTitle(title);
+            item.setPrice(price);
+            itemRepository.save(item);
+        }
+    }
 }

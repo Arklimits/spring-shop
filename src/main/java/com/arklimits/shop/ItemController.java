@@ -22,12 +22,12 @@ public class ItemController {
         List<Item> result = itemRepository.findAll();
         model.addAttribute("items", result);
 
-        return "list.html";
+        return "list";
     }
 
     @GetMapping("/write")
     String write(Model model) {
-        return "write.html";
+        return "write";
     }
 
     @PostMapping("/add")
@@ -44,5 +44,21 @@ public class ItemController {
                     return "detail";
                 })
                 .orElse("redirect:/list");
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        return itemService.findItemById(id)
+                .map(item -> {
+                    model.addAttribute("item", item);
+                    return "edit";
+                })
+                .orElse("redirect:/list");
+    }
+
+    @PostMapping("/edit")
+    public String editPost(Long id, String title, Integer price) {
+        itemService.editItem(id, title, price);
+        return "redirect:/list";
     }
 }
