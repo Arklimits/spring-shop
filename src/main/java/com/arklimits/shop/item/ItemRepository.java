@@ -1,4 +1,4 @@
-package com.arklimits.shop;
+package com.arklimits.shop.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

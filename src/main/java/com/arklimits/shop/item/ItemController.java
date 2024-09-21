@@ -1,4 +1,4 @@
-package com.arklimits.shop;
+package com.arklimits.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -57,7 +55,7 @@ public class ItemController {
     }
 
     @PostMapping("/edit")
-    public String editPost(Long id, String title, Integer price) {
+    public String editItem(Long id, String title, Integer price) {
         itemService.editItem(id, title, price);
         return "redirect:/list";
     }
