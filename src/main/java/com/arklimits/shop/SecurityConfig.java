@@ -21,6 +21,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable());
         http.authorizeHttpRequests((authorize) -> authorize.requestMatchers("/**").permitAll());
+        http.formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"));
+        http.logout(logout -> logout.logoutUrl("/logout"));
         return http.build();
     }
 }

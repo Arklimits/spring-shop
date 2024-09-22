@@ -1,6 +1,7 @@
 package com.arklimits.shop.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +13,23 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/register")
-    String registerPage() {
+    public String registerPage() {
         return "register";
     }
 
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping("/mypage")
+    public String myPage(Authentication auth) {
+        return "mypage";
+    }
+
     @PostMapping("/member")
-    String addMember(Member member) {
+    public String addMember(Member member) {
         memberService.addMember(member);
-        return "list";
+        return "redirect:list";
     }
 }
