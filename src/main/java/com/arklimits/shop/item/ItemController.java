@@ -1,13 +1,13 @@
 package com.arklimits.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -58,5 +58,11 @@ public class ItemController {
     public String editItem(Long id, String title, Integer price) {
         itemService.editItem(id, title, price);
         return "redirect:/list";
+    }
+
+    @DeleteMapping("/item")
+    public ResponseEntity<String> deleteItem(@RequestParam Long id) {
+        itemService.deleteItem(id);
+        return ResponseEntity.status(200).body("삭제완료");
     }
 }
