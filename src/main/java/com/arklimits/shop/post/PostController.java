@@ -1,4 +1,4 @@
-package com.arklimits.shop;
+package com.arklimits.shop.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

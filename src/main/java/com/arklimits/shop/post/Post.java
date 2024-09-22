@@ -1,4 +1,4 @@
-package com.arklimits.shop;
+package com.arklimits.shop.post;
 
 import jakarta.persistence.*;
 import lombok.Getter;
