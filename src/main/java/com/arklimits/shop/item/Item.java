@@ -10,6 +10,7 @@ import lombok.*;
 @RequiredArgsConstructor
 @ToString
 public class Item {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

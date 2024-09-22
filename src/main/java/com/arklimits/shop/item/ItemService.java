@@ -8,9 +8,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ItemService {
+
     private final ItemRepository itemRepository;
 
-    public void saveItem(String title, Integer price){
+    public void saveItem(String title, Integer price) {
         Item item = new Item(title, price);
         itemRepository.save(item);
     }
@@ -19,9 +20,9 @@ public class ItemService {
         return itemRepository.findById(id);
     }
 
-    public void editItem(Long id, String title, Integer price){
+    public void editItem(Long id, String title, Integer price) {
         Optional<Item> optionalItem = itemRepository.findById(id);
-        if(optionalItem.isPresent()){
+        if (optionalItem.isPresent()) {
             Item item = optionalItem.get();
             item.setTitle(title);
             item.setPrice(price);
@@ -29,7 +30,7 @@ public class ItemService {
         }
     }
 
-    public void deleteItem(Long id){
+    public void deleteItem(Long id) {
         itemRepository.deleteById(id);
     }
 }

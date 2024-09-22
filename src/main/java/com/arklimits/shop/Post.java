@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 @ToString
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

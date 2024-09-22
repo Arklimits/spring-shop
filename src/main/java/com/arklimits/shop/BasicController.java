@@ -8,26 +8,27 @@ import java.time.LocalDateTime;
 
 @Controller
 public class BasicController {
+
     @GetMapping("/")
-    String home(){
+    String home() {
         return "index.html";
     }
 
     @GetMapping("/about")
     @ResponseBody
-    String about(){
+    String about() {
         return "Site for practice Spring Boot";
     }
 
     @GetMapping("/mypage")
     @ResponseBody
-    String mypage(){
+    String mypage() {
         return "My Page";
     }
 
     @GetMapping("/date")
     @ResponseBody
-   LocalDateTime date() {
+    LocalDateTime date() {
         return LocalDateTime.now();
     }
 

@@ -12,6 +12,7 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 public class ItemController {
+
     private final ItemRepository itemRepository;
     private final ItemService itemService;
 
@@ -36,22 +37,18 @@ public class ItemController {
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        return itemService.findItemById(id)
-                .map(item -> {
-                    model.addAttribute("item", item);
-                    return "detail";
-                })
-                .orElse("redirect:/list");
+        return itemService.findItemById(id).map(item -> {
+            model.addAttribute("item", item);
+            return "detail";
+        }).orElse("redirect:/list");
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        return itemService.findItemById(id)
-                .map(item -> {
-                    model.addAttribute("item", item);
-                    return "edit";
-                })
-                .orElse("redirect:/list");
+        return itemService.findItemById(id).map(item -> {
+            model.addAttribute("item", item);
+            return "edit";
+        }).orElse("redirect:/list");
     }
 
     @PostMapping("/edit")
