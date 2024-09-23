@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -17,9 +19,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    //추가
+    @Bean
+    public CsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setHeaderName("X-XSRF-TOKEN");
+        return repository;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf((csrf) -> csrf.disable());
+        http.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository())
+            .ignoringRequestMatchers("/login")
+        );
         http.authorizeHttpRequests((authorize) -> authorize.requestMatchers("/**").permitAll());
         http.formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"));
         http.logout(logout -> logout.logoutUrl("/logout"));

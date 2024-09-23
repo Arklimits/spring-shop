@@ -19,12 +19,14 @@
         </a>
         <p th:text="${i.price}">7억</p>
         <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
-        <span th:onclick="fetch('/item?id=[[${i.id}]]', {method : 'DELETE'})
-            .then(r => r.text())
-            .then(() => {
-                location.reload();
-            })
-
+        <span th:onclick="fetch('/item?id=[[${i.id}]]', {method : 'DELETE', headers: {
+        'Content-Type': 'application/json',
+        'X-XSRF-TOKEN': [[${_csrf.token}]]}
+        })
+        .then(r => r.text())
+        .then(() => {
+            location.reload();
+        })
         ">🗑️</span>
 
     </div>
