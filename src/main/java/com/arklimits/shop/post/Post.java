@@ -1,23 +1,23 @@
-package com.arklimits.shop;
+package com.arklimits.shop.post;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.ToString;
+
+import java.util.Date;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@RequiredArgsConstructor
 @ToString
-public class Item {
+public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    @NonNull
     private String title;
 
     @Column(nullable = false)
-    @NonNull
-    private Integer price;
+    private Date date;
 }

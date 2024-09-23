@@ -15,7 +15,14 @@ spring:
 
   # jpa setting
   jpa:
-    properties:
-      hibernate:
-        show_sql: true
-        ddl-auto: update
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+# server setting
+server:
+  servlet:
+    session:
+      timeout: 3600s
+      cookie:
+        max-age: 3600s

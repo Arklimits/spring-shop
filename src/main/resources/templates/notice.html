@@ -11,18 +11,18 @@
 <body>
 <table class="tg">
     <thead>
-        <tr>
-            <th class="tg-0lax" scope="col">id</th>
-            <th class="tg-0lax" scope="col">글제목</th>
-            <th class="tg-0lax" scope="col">날짜</th>
-        </tr>
+    <tr>
+        <th class="tg-0lax" scope="col">id</th>
+        <th class="tg-0lax" scope="col">글제목</th>
+        <th class="tg-0lax" scope="col">날짜</th>
+    </tr>
     </thead>
     <tbody>
-        <tr th:each="i: ${posts}">
-            <td class="tg-0pky" th:text="${i.id}">###</td>
-            <td class="tg-0pky" th:text="${i.title}">Title</td>
-            <td class="tg-0pky" th:text="${#dates.format(i.date, 'yyyy년 M월 d일')}">Date</td>
-        </tr>
+    <tr th:each="i: ${posts}">
+        <td class="tg-0pky" th:text="${i.id}">###</td>
+        <td class="tg-0pky" th:text="${i.title}">Title</td>
+        <td class="tg-0pky" th:text="${#dates.format(i.date, 'yyyy년 M월 d일')}">Date</td>
+    </tr>
     </tbody>
 
 </table>
