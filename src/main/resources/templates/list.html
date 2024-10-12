@@ -32,5 +32,14 @@
     </div>
 </div>
 
+<!-- 페이지 번호 버튼 -->
+<div>
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:each="i : ${#numbers.sequence(1, pages)}" th:classappend="${page == i} ? 'active'">
+            <a class="page-link" th:href="@{/list/page/{page}(page=${i})}" th:text="${i}">1</a>
+        </li>
+    </ul>
+</div>
+
 </body>
 </html>
