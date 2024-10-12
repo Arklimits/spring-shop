@@ -1,7 +1,10 @@
-package com.arklimits.shop.member;
+package com.arklimits.shop.member.controller;
 
 import com.arklimits.shop.member.dto.MemberDto;
 import com.arklimits.shop.member.entity.Member;
+import com.arklimits.shop.member.repository.MemberRepository;
+import com.arklimits.shop.member.security.CustomUser;
+import com.arklimits.shop.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

@@ -1,14 +1,11 @@
-package com.arklimits.shop.member;
+package com.arklimits.shop.member.security;
 
+import com.arklimits.shop.member.repository.MemberRepository;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,14 +35,3 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 }
 
-@Getter
-@Setter
-class CustomUser extends User {
-
-    private String displayName;
-
-    public CustomUser(String username, String password,
-        Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-    }
-}

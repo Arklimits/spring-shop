@@ -1,4 +1,4 @@
-package com.arklimits.shop.member;
+package com.arklimits.shop.member.repository;
 
 import com.arklimits.shop.member.entity.Member;
 import java.util.Optional;

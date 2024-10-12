@@ -1,7 +1,9 @@
-package com.arklimits.shop.member;
+package com.arklimits.shop.member.service;
 
 import com.arklimits.shop.member.dto.MemberDto;
 import com.arklimits.shop.member.entity.Member;
+import com.arklimits.shop.member.mapper.MemberMapper;
+import com.arklimits.shop.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
 
     public void addMember(Member member) {
@@ -23,6 +26,6 @@ public class MemberService {
         var member = memberRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
 
-        return new MemberDto(member.getId(), member.getUsername(), member.getDisplayName());
+        return memberMapper.memberToMemberDto(member);
     }
 }
