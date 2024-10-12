@@ -4,6 +4,15 @@ a {
   text-decoration: none;
 }
 
+label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+input {
+  display: inline-block;
+}
+
 .nav {
   display: flex;
   padding: 10px;
@@ -33,10 +42,6 @@ button {
   background: black;
   color: white;
   border: none;
-}
-
-input {
-  display: block;
 }
 
 .card {
@@ -132,4 +137,60 @@ input {
   color: inherit;
   background-color: #fff;
   border: 1px solid #dee2e6;
+}
+
+.upload-area {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.upload-area .image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.upload-area .image-preview {
+  width: 400px;
+  height: 400px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.upload-area .upload-table {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.upload-area label {
+  width: 80px; /* 레이블의 고정 너비 */
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.upload-area input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.submit-button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 0 auto;
+}
+
+.submit-button:hover {
+  background-color: #333;
 }

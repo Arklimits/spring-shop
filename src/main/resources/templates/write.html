@@ -10,13 +10,80 @@
 </head>
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
+<div class="upload-area">
+    <div class="image-container">
+        <img class="image-preview" id="imagePreview" src="https://placehold.co/400">
+    </div>
 
-<form action="/add" method="POST">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-    <input name="title">
-    <input name="price">
-    <button type="submit">전송</button>
-</form>
+    <form id="uploadForm" th:action="@{/add}" th:method="POST" onsubmit="return uploadAndSubmit(event)">
+        <div class="upload-table">
+            <label for="title">상품명:</label>
+            <input id="title" name="title">
+        </div>
+        <div class="upload-table">
+            <label for="price">가격:</label>
+            <input id="price" name="price">
+        </div>
+        <div class="upload-table">
+            <label for="image">사진:</label>
+            <input id="image" name="image" type="file" onchange="previewImage(this)">
+        </div>
+        <input type="hidden" id="imageUrl" name="imageUrl">
+
+        <button class="submit-button" type="submit">전송</button>
+    </form>
+</div>
+
+<script>
+  // 미리보기 함수
+  function previewImage(e) {
+    if (e.files && e.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById('imagePreview').src = e.target.result;
+      }
+      reader.readAsDataURL(e.files[0]);
+    }
+  }
+
+  // 파일 업로드와 폼 제출 처리
+  async function uploadAndSubmit(event) {
+    event.preventDefault();
+
+    const fileInput = document.getElementById('image');
+    const file = fileInput.files[0];
+
+    if (!file) {
+      document.getElementById('uploadForm').submit();
+      return;
+    }
+
+    const fileName = encodeURIComponent(file.name);
+
+    const response = await fetch(`/presigned-url?filename=${fileName}`);
+    const presignedUrl = await response.text();
+
+    const uploadResult = await fetch(presignedUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type
+      },
+      body: file
+    });
+
+    if (uploadResult.ok) {
+      const imageUrl = presignedUrl.split("?")[0];
+      document.getElementById('imageUrl').value = imageUrl;
+
+      document.getElementById('uploadForm').submit();
+    } else {
+      console.error("파일 업로드 실패", uploadResult);
+      alert("파일 업로드에 실패했습니다.");
+    }
+
+    return false;
+  }
+</script>
 
 </body>
 </html>
