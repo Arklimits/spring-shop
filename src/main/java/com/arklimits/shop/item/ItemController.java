@@ -1,13 +1,16 @@
 package com.arklimits.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,9 +21,18 @@ public class ItemController {
 
     @GetMapping("/list")
     String list(Model model) {
-        List<Item> result = itemRepository.findAll();
-        model.addAttribute("items", result);
+//        List<Item> result = itemRepository.findAll();
+//        model.addAttribute("items", result);
+//
+//        return "list";
+        return "redirect:/list/page/1";
+    }
 
+    @GetMapping("/list/page/{page}")
+    String getListPage(@PathVariable Integer page, Model model) {
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(page - 1, 5));
+        model.addAttribute("items", result);
+        model.addAttribute("pages", result.getTotalPages());
         return "list";
     }
 
