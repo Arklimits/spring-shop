@@ -1,4 +1,4 @@
-package com.arklimits.shop;
+package com.arklimits.shop.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,10 +10,11 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class PostController {
+
     private final PostRepository postRepository;
 
     @GetMapping("/notice")
-    String notice(Model model){
+    String notice(Model model) {
         List<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
         return "notice.html";

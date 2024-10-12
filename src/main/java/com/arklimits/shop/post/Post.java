@@ -1,13 +1,16 @@
-package com.arklimits.shop;
+package com.arklimits.shop.post;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @ToString
-public class Item {
+public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,5 +19,5 @@ public class Item {
     private String title;
 
     @Column(nullable = false)
-    private Integer price;
+    private Date date;
 }
