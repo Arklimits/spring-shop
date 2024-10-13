@@ -25,12 +25,13 @@ public class ItemService {
         return itemRepository.findById(id);
     }
 
-    public void editItem(Long id, String title, Integer price) {
+    public void editItem(Long id, String title, Integer price, String imageUrl) {
         Optional<Item> optionalItem = itemRepository.findById(id);
         if (optionalItem.isPresent()) {
             Item item = optionalItem.get();
             item.setTitle(title);
             item.setPrice(price);
+            item.setImageUrl(imageUrl);
             itemRepository.save(item);
         }
     }

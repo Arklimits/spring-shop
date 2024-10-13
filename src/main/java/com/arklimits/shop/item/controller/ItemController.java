@@ -58,7 +58,7 @@ public class ItemController {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
+    public String editPage(@PathVariable Long id, Model model) {
         return itemService.findItemById(id).map(item -> {
             model.addAttribute("item", item);
             return "edit";
@@ -66,8 +66,8 @@ public class ItemController {
     }
 
     @PostMapping("/edit")
-    public String editItem(Long id, String title, Integer price) {
-        itemService.editItem(id, title, price);
+    public String editItem(Long id, String title, Integer price, String imageUrl) {
+        itemService.editItem(id, title, price, imageUrl);
         return "redirect:/list";
     }
 
