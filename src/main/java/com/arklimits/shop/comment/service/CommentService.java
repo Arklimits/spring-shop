@@ -12,12 +12,9 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public void saveComment(String username, Integer rating, String content, Long parentId) {
-        var comment = new Comment();
-        comment.setUsername(username);
-        comment.setRating(rating);
-        comment.setContent(content);
-        comment.setParentId(parentId);
+    public void saveComment(String username, String displayName, Integer rating, String content,
+        Long parentId) {
+        Comment comment = new Comment(username, displayName, rating, content, parentId);
 
         commentRepository.save(comment);
     }

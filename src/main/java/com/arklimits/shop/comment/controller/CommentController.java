@@ -19,8 +19,9 @@ public class CommentController {
     String postComment(Integer rating, String content, Long parentId, Authentication auth) {
         CustomUser user = (CustomUser) auth.getPrincipal();
         String username = user.getUsername();
+        String displayName = user.getDisplayName();
 
-        commentService.saveComment(username, rating, content, parentId);
+        commentService.saveComment(username, displayName, rating, content, parentId);
 
         return "redirect:/detail/" + parentId;
     }

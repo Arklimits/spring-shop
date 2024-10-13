@@ -30,6 +30,10 @@ public class Comment {
 
     @Column(nullable = false)
     @NonNull
+    private String displayName;
+
+    @Column(nullable = false)
+    @NonNull
     private Integer rating;
 
     @Column(nullable = false)
