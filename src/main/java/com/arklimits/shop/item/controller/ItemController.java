@@ -1,5 +1,6 @@
 package com.arklimits.shop.item.controller;
 
+import com.arklimits.shop.comment.repository.CommentRepository;
 import com.arklimits.shop.item.S3Service;
 import com.arklimits.shop.item.entity.Item;
 import com.arklimits.shop.item.repository.ItemRepository;
@@ -23,6 +24,7 @@ public class ItemController {
 
     private final ItemRepository itemRepository;
     private final ItemService itemService;
+    private final CommentRepository commentRepository;
     private final S3Service s3Service;
 
     @GetMapping("/list")

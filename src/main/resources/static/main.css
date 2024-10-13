@@ -194,3 +194,28 @@ button {
 .submit-button:hover {
   background-color: #333;
 }
+
+.comment-area {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.comment-area label {
+  width: 50px;
+  font-size: 14px;
+}
+
+.comment-area .comment-table {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-area input, .comment-area select {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}

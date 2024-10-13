@@ -17,6 +17,28 @@
     <h4 th:text="${item.title}">금도금 바지</h4>
     <p th:text="${item.price+'원'}">7억</p>
 </div>
+<div class="comment-area">
+    <form class="comment-form" th:action="@{/comment}" th:method="POST">
+        <div class="comment-table">
+            <label for="rating">별점 :</label>
+            <select id="rating" name="rating" onchange="updateStars()">
+                <option value="5" selected>★★★★★</option>
+                <option value="4">★★★★☆</option>
+                <option value="3">★★★☆☆</option>
+                <option value="2">★★☆☆☆</option>
+                <option value="1">★☆☆☆☆</option>
+                <option value="0">☆☆☆☆☆</option>
+            </select>
+        </div>
+        <div class="comment-table">
+            <label for="content">내용 :</label>
+            <input id="content" name="content">
+        </div>
+        <input type="hidden" name="parentId" th:value="${item.id}">
+
+        <button class="submit-button" type="submit">전송</button>
+    </form>
+</div>
 
 </body>
 </html>
