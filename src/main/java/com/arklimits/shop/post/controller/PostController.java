@@ -1,11 +1,12 @@
-package com.arklimits.shop.post;
+package com.arklimits.shop.post.controller;
 
+import com.arklimits.shop.post.entity.Post;
+import com.arklimits.shop.post.repository.PostRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
