@@ -27,10 +27,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("일반유저"));
 
-        var a = new CustomUser(user.getUsername(), user.getPassword(), authorities);
-        a.setDisplayName(user.getUsername());
+        CustomUser customUser = new CustomUser(user.getUsername(), user.getPassword(), authorities);
+        customUser.setDisplayName(user.getDisplayName());
 
-        return a;
+        return customUser;
 
     }
 }
