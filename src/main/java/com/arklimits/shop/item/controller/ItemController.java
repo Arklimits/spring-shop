@@ -1,10 +1,12 @@
 package com.arklimits.shop.item.controller;
 
-import com.arklimits.shop.comment.repository.CommentRepository;
+import com.arklimits.shop.comment.entity.Comment;
+import com.arklimits.shop.comment.service.CommentService;
 import com.arklimits.shop.item.S3Service;
 import com.arklimits.shop.item.entity.Item;
 import com.arklimits.shop.item.repository.ItemRepository;
 import com.arklimits.shop.item.service.ItemService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +26,7 @@ public class ItemController {
 
     private final ItemRepository itemRepository;
     private final ItemService itemService;
-    private final CommentRepository commentRepository;
+    private final CommentService commentService;
     private final S3Service s3Service;
 
     @GetMapping("/list")
@@ -54,7 +56,13 @@ public class ItemController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
         return itemService.findItemById(id).map(item -> {
+            // 아이템 정보 추가
             model.addAttribute("item", item);
+
+            // 댓글 리스트 가져오기
+            List<Comment> comments = commentService.findCommentsOfPage(id);
+            model.addAttribute("comments", comments);
+
             return "detail";
         }).orElse("redirect:/list");
     }

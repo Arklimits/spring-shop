@@ -13,6 +13,16 @@ input {
   display: inline-block;
 }
 
+button {
+  background: black;
+  color: white;
+  border: none;
+}
+
+.border {
+  border: 1px solid #333333;
+}
+
 .nav {
   display: flex;
   padding: 10px;
@@ -36,12 +46,6 @@ input, button {
   border: 1px solid grey;
   border-radius: 4px;
   vertical-align: middle;
-}
-
-button {
-  background: black;
-  color: white;
-  border: none;
 }
 
 .card {
@@ -194,6 +198,8 @@ button {
 .submit-button:hover {
   background-color: #333;
 }
+
+/* Comment Area */
 
 .comment-area {
   max-width: 400px;
