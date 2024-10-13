@@ -1,10 +1,13 @@
-package com.arklimits.shop.post;
+package com.arklimits.shop.post.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import java.util.Date;
 import lombok.Getter;
 import lombok.ToString;
-
-import java.util.Date;
 
 @Entity
 @Getter

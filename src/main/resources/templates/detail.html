@@ -13,9 +13,51 @@
 
 <div class="detail">
     <h4>상세페이지</h4>
-    <img src="https://placehold.co/300">
+    <img th:src="${item.imageUrl}">
     <h4 th:text="${item.title}">금도금 바지</h4>
     <p th:text="${item.price+'원'}">7억</p>
+</div>
+<div class="comment-area">
+    <h5>댓글</h5>
+    <div class="comment-card" th:each="comment : ${comments}">
+        <div class="single-comment">
+            <p>
+                <strong th:text="${comment.displayName}">익명</strong>
+                <span>
+                    <span th:if="${comment.rating == 0}">☆☆☆☆☆</span>
+                    <span th:if="${comment.rating == 1}">★☆☆☆☆</span>
+                    <span th:if="${comment.rating == 2}">★★☆☆☆</span>
+                    <span th:if="${comment.rating == 3}">★★★☆☆</span>
+                    <span th:if="${comment.rating == 4}">★★★★☆</span>
+                    <span th:if="${comment.rating == 5}">★★★★★</span>
+                </span>
+            </p>
+            <p th:text="${comment.content}">여기에 댓글 내용이 들어갑니다.</p>
+        </div>
+    </div>
+    <div class="border">
+        <h5>댓글 달기</h5>
+        <form class="comment-form" th:action="@{/comment}" th:method="POST">
+            <div class="comment-table">
+                <label for="rating">별점 :</label>
+                <select id="rating" name="rating" onchange="updateStars()">
+                    <option value="5" selected>★★★★★</option>
+                    <option value="4">★★★★☆</option>
+                    <option value="3">★★★☆☆</option>
+                    <option value="2">★★☆☆☆</option>
+                    <option value="1">★☆☆☆☆</option>
+                    <option value="0">☆☆☆☆☆</option>
+                </select>
+            </div>
+            <div class="comment-table">
+                <label for="content">내용 :</label>
+                <input id="content" name="content">
+            </div>
+            <input type="hidden" name="parentId" th:value="${item.id}">
+
+            <button class="submit-button" type="submit">전송</button>
+        </form>
+    </div>
 </div>
 
 </body>

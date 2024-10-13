@@ -1,9 +1,10 @@
-package com.arklimits.shop.item;
+package com.arklimits.shop.item.service;
 
+import com.arklimits.shop.item.entity.Item;
+import com.arklimits.shop.item.repository.ItemRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -11,8 +12,12 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public void saveItem(String title, Integer price) {
-        Item item = new Item(title, price);
+    public void saveItem(String title, Integer price, String imageUrl) {
+        System.out.println(imageUrl);
+        if (imageUrl.isBlank()) {
+            imageUrl = "https://placehold.co/400";
+        }
+        Item item = new Item(title, price, imageUrl);
         itemRepository.save(item);
     }
 
@@ -20,12 +25,13 @@ public class ItemService {
         return itemRepository.findById(id);
     }
 
-    public void editItem(Long id, String title, Integer price) {
+    public void editItem(Long id, String title, Integer price, String imageUrl) {
         Optional<Item> optionalItem = itemRepository.findById(id);
         if (optionalItem.isPresent()) {
             Item item = optionalItem.get();
             item.setTitle(title);
             item.setPrice(price);
+            item.setImageUrl(imageUrl);
             itemRepository.save(item);
         }
     }
