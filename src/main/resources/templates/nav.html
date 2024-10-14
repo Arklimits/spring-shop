@@ -1,5 +1,29 @@
-<div class="nav" th:fragment="navbar">
+<div class="nav" th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
     <a class="logo">SpringMall</a>
     <a href="/list">List</a>
-    <a href="/write">Write</a>
+
+    <div sec:authorize="!isAuthenticated()">
+        <a href="/login">Login</a>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <a href="/write">Write</a>
+        <a href="#" th:onclick="fetch('/logout', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-XSRF-TOKEN': [[${_csrf.token}]]
+            }
+            }).then(response => {
+                if (response.ok) {
+                window.location.href = '/';
+            }
+        });">Logout</a>
+    </div>
 </div>
+
+<script>
+  function logout() {
+
+  }
+</script>
