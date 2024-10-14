@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -18,17 +18,18 @@
             <h4 th:text="${i.title}">바지</h4>
         </a>
         <p th:text="${i.price}">7억</p>
-        <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
-        <span th:onclick="fetch('/item?id=[[${i.id}]]', {method : 'DELETE', headers: {
-        'Content-Type': 'application/json',
-        'X-XSRF-TOKEN': [[${_csrf.token}]]}
-        })
-        .then(r => r.text())
-        .then(() => {
-            location.reload();
-        })
-        ">🗑️</span>
-
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
+            <a th:onclick="fetch('/item?id=[[${i.id}]]', {method : 'DELETE', headers: {
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': [[${_csrf.token}]]}
+                })
+                .then(r => r.text())
+                .then(() => {
+                    location.reload();
+                })
+                ">🗑️</a>
+        </div>
     </div>
 </div>
 
