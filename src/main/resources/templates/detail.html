@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -35,7 +35,7 @@
             <p th:text="${comment.content}">여기에 댓글 내용이 들어갑니다.</p>
         </div>
     </div>
-    <div class="border">
+    <div class="border" sec:authorize="isAuthenticated()">
         <h5>댓글 달기</h5>
         <form class="comment-form" th:action="@{/comment}" th:method="POST">
             <div class="comment-table">
