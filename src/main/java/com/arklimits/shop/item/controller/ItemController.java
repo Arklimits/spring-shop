@@ -30,20 +30,20 @@ public class ItemController {
 
     @GetMapping("/list")
     String getListPage(@RequestParam(required = false) String keywords,
-        @RequestParam(defaultValue = "1") Integer page, Model model) {
+        @RequestParam(defaultValue = "1") Integer page,
+        Model model) {
 
-        Page<Item> result;
-
-        if (keywords != null && !keywords.isEmpty()) {
-            result = itemService.searchItems(keywords, page);
-            model.addAttribute("keywords", keywords);
-        } else {
-            result = itemService.listAllItems(page);
-        }
+        Page<Item> result = (keywords != null && !keywords.isBlank())
+            ? itemService.searchItems(keywords, page)
+            : itemService.listAllItems(page);
 
         model.addAttribute("items", result);
         model.addAttribute("page", page);
         model.addAttribute("pages", result.getTotalPages());
+
+        if (keywords != null && !keywords.isBlank()) {
+            model.addAttribute("keywords", keywords);
+        }
 
         return "list";
     }
