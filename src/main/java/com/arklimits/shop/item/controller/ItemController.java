@@ -30,16 +30,25 @@ public class ItemController {
     private final S3Service s3Service;
 
     @GetMapping("/list")
-    String list(Model model) {
-        return "redirect:/list/1";
-    }
-
-    @GetMapping("/list/{page}")
-    String getListPage(@PathVariable Integer page, Model model) {
+    String getListPage(@RequestParam(defaultValue = "1") Integer page, Model model) {
         Page<Item> result = itemRepository.findPageBy(PageRequest.of(page - 1, 5));
         model.addAttribute("items", result);
+        model.addAttribute("page", page);
         model.addAttribute("pages", result.getTotalPages());
         return "list";
+    }
+
+    @GetMapping("/search")
+    String searchItem(@RequestParam String keywords, @RequestParam(defaultValue = "1") Integer page,
+        Model model) {
+        Page<Item> result = itemRepository.findPageByTitleContains(keywords,
+            PageRequest.of(page - 1, 5));
+        model.addAttribute("items", result);
+        model.addAttribute("pages", result.getTotalPages());
+        model.addAttribute("page", page);
+        model.addAttribute("keywords", keywords);
+
+        return "search";
     }
 
     @GetMapping("/write")
@@ -48,7 +57,7 @@ public class ItemController {
     }
 
     @PostMapping("/add")
-    String addPost(String title, Integer price, String imageUrl) {
+    String addPost(@RequestParam String title, @RequestParam Integer price, String imageUrl) {
         itemService.saveItem(title, price, imageUrl);
         return "redirect:/list";
     }
@@ -76,7 +85,8 @@ public class ItemController {
     }
 
     @PostMapping("/edit")
-    public String editItem(Long id, String title, Integer price, String imageUrl) {
+    public String editItem(@RequestParam Long id, @RequestParam String title,
+        @RequestParam Integer price, @RequestParam String imageUrl) {
         itemService.editItem(id, title, price, imageUrl);
         return "redirect:/list";
     }
@@ -90,9 +100,7 @@ public class ItemController {
     @GetMapping("/presigned-url")
     @ResponseBody
     String getURL(@RequestParam String filename) {
-        System.out.println(filename);
         var result = s3Service.createPresignedUrl("test/" + filename);
-        System.out.println(result);
         return result;
     }
 }
