@@ -12,7 +12,7 @@
 <div th:replace="~{ nav.html::navbar }"></div>
 
 <div class="searchbar">
-    <form action="/search" method="GET">
+    <form action="/list" method="GET">
         <input name="keywords" style="display: inline">
         <button>검색</button>
     </form>
@@ -46,7 +46,7 @@
 <div>
     <ul class="pagination justify-content-center">
         <li class="page-item" th:each="i : ${#numbers.sequence(1, pages)}" th:classappend="${page == i} ? 'active'">
-            <a class="page-link" th:href="@{/list(page=${i})}" th:text="${i}">1</a>
+            <a class="page-link" th:href="@{/list(keywords=${keywords}, page=${i})}" th:text="${i}">1</a>
         </li>
     </ul>
 </div>

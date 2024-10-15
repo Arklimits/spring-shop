@@ -9,7 +9,6 @@ import com.arklimits.shop.item.service.ItemService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,25 +29,23 @@ public class ItemController {
     private final S3Service s3Service;
 
     @GetMapping("/list")
-    String getListPage(@RequestParam(defaultValue = "1") Integer page, Model model) {
-        Page<Item> result = itemRepository.findPageBy(PageRequest.of(page - 1, 5));
+    String getListPage(@RequestParam(required = false) String keywords,
+        @RequestParam(defaultValue = "1") Integer page, Model model) {
+
+        Page<Item> result;
+
+        if (keywords != null && !keywords.isEmpty()) {
+            result = itemService.searchItems(keywords, page);
+            model.addAttribute("keywords", keywords);
+        } else {
+            result = itemService.listAllItems(page);
+        }
+
         model.addAttribute("items", result);
         model.addAttribute("page", page);
         model.addAttribute("pages", result.getTotalPages());
+
         return "list";
-    }
-
-    @GetMapping("/search")
-    String searchItem(@RequestParam String keywords, @RequestParam(defaultValue = "1") Integer page,
-        Model model) {
-        Page<Item> result = itemRepository.findPageByTitleContains(keywords,
-            PageRequest.of(page - 1, 5));
-        model.addAttribute("items", result);
-        model.addAttribute("pages", result.getTotalPages());
-        model.addAttribute("page", page);
-        model.addAttribute("keywords", keywords);
-
-        return "search";
     }
 
     @GetMapping("/write")
