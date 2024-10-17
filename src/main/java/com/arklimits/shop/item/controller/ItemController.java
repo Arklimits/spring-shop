@@ -9,7 +9,6 @@ import com.arklimits.shop.item.service.ItemService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,15 +29,22 @@ public class ItemController {
     private final S3Service s3Service;
 
     @GetMapping("/list")
-    String list(Model model) {
-        return "redirect:/list/1";
-    }
+    String getListPage(@RequestParam(required = false) String keywords,
+        @RequestParam(defaultValue = "1") Integer page,
+        Model model) {
 
-    @GetMapping("/list/{page}")
-    String getListPage(@PathVariable Integer page, Model model) {
-        Page<Item> result = itemRepository.findPageBy(PageRequest.of(page - 1, 5));
+        Page<Item> result = (keywords != null && !keywords.isBlank())
+            ? itemService.searchItems(keywords, page)
+            : itemService.listAllItems(page);
+
         model.addAttribute("items", result);
+        model.addAttribute("page", page);
         model.addAttribute("pages", result.getTotalPages());
+
+        if (keywords != null && !keywords.isBlank()) {
+            model.addAttribute("keywords", keywords);
+        }
+
         return "list";
     }
 
@@ -48,7 +54,7 @@ public class ItemController {
     }
 
     @PostMapping("/add")
-    String addPost(String title, Integer price, String imageUrl) {
+    String addPost(@RequestParam String title, @RequestParam Integer price, String imageUrl) {
         itemService.saveItem(title, price, imageUrl);
         return "redirect:/list";
     }
@@ -76,7 +82,8 @@ public class ItemController {
     }
 
     @PostMapping("/edit")
-    public String editItem(Long id, String title, Integer price, String imageUrl) {
+    public String editItem(@RequestParam Long id, @RequestParam String title,
+        @RequestParam Integer price, @RequestParam String imageUrl) {
         itemService.editItem(id, title, price, imageUrl);
         return "redirect:/list";
     }
@@ -90,9 +97,7 @@ public class ItemController {
     @GetMapping("/presigned-url")
     @ResponseBody
     String getURL(@RequestParam String filename) {
-        System.out.println(filename);
         var result = s3Service.createPresignedUrl("test/" + filename);
-        System.out.println(result);
         return result;
     }
 }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -16,6 +16,10 @@
 <div sec:authentication="principal.username"></div>
 <div sec:authorize="hasAuthority('일반유저')">
     <h4>이 유저는 일반유저임</h4>
+</div>
+
+<div th:each="order: ${orders}">
+    <p th:text="${order}"></p>
 </div>
 
 </body>

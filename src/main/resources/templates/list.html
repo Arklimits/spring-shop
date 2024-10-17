@@ -11,6 +11,13 @@
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
 
+<div class="searchbar">
+    <form action="/list" method="GET">
+        <input name="keywords" style="display: inline">
+        <button>검색</button>
+    </form>
+</div>
+
 <div class="card" th:each="i: ${items}">
     <img th:src="${i.imageUrl}">
     <div>
@@ -20,14 +27,16 @@
         <p th:text="${i.price}">7억</p>
         <div sec:authorize="isAuthenticated()">
             <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
-            <a th:onclick="fetch('/item?id=[[${i.id}]]', {method : 'DELETE', headers: {
-                'Content-Type': 'application/json',
-                'X-XSRF-TOKEN': [[${_csrf.token}]]}
-                })
-                .then(r => r.text())
-                .then(() => {
-                    location.reload();
-                })
+            <a th:onclick="fetch('/item?id=[[${i.id}]]', {
+                method : 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': [[${_csrf.token}]]}
+                    })
+                    .then(r => r.text())
+                    .then(() => {
+                        location.reload();
+                    })
                 ">🗑️</a>
         </div>
     </div>
@@ -37,7 +46,7 @@
 <div>
     <ul class="pagination justify-content-center">
         <li class="page-item" th:each="i : ${#numbers.sequence(1, pages)}" th:classappend="${page == i} ? 'active'">
-            <a class="page-link" th:href="@{/list/{page}(page=${i})}" th:text="${i}">1</a>
+            <a class="page-link" th:href="@{/list(keywords=${keywords}, page=${i})}" th:text="${i}">1</a>
         </li>
     </ul>
 </div>

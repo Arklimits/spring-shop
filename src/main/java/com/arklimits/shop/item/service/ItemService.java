@@ -4,6 +4,8 @@ import com.arklimits.shop.item.entity.Item;
 import com.arklimits.shop.item.repository.ItemRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +13,15 @@ import org.springframework.stereotype.Service;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+
+    public Page<Item> listAllItems(Integer page) {
+        return itemRepository.findAll(PageRequest.of(page - 1, 5));
+    }
+
+    public Page<Item> searchItems(String keywords, Integer page) {
+
+        return itemRepository.findPageByTitleFullTextIndex(keywords, PageRequest.of(page - 1, 5));
+    }
 
     public void saveItem(String title, Integer price, String imageUrl) {
         System.out.println(imageUrl);
@@ -39,4 +50,5 @@ public class ItemService {
     public void deleteItem(Long id) {
         itemRepository.deleteById(id);
     }
+
 }

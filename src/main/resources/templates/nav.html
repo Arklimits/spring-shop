@@ -8,6 +8,7 @@
 
     <div sec:authorize="isAuthenticated()">
         <a href="/write">Write</a>
+        <a href="/mypage">MyPage</a>
         <a href="#" th:onclick="fetch('/logout', {
             method: 'POST',
             headers: {

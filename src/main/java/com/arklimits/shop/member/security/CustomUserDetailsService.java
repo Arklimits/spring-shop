@@ -28,6 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         authorities.add(new SimpleGrantedAuthority("일반유저"));
 
         CustomUser customUser = new CustomUser(user.getUsername(), user.getPassword(), authorities);
+        customUser.setId(user.getId());
         customUser.setDisplayName(user.getDisplayName());
 
         return customUser;

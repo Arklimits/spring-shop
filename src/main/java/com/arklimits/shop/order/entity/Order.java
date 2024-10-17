@@ -1,52 +1,53 @@
-package com.arklimits.shop.comment.entity;
+package com.arklimits.shop.order.entity;
 
-import com.arklimits.shop.item.entity.Item;
-import jakarta.persistence.Column;
+import com.arklimits.shop.member.entity.Member;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
-@Entity
 @Getter
-@Setter
-@ToString
+@Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Comment {
+@ToString
+@Table(name = "orders")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     @NonNull
-    private String username;
-
-    @Column(nullable = false)
-    @NonNull
-    private String displayName;
-
-    @Column(nullable = false)
-    @NonNull
-    private Integer rating;
-
-    @Column(nullable = false)
-    @NonNull
-    private String content;
+    private String title;
 
     @NonNull
-    @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Item item;
+    private Integer price;
+
+    @NonNull
+    private Integer quantity;
+
+    @NonNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Member member;
+
+    @NonNull
+    private String imageUrl;
+
+    @CreationTimestamp
+    private LocalDateTime orderDate;
 }
