@@ -4,6 +4,7 @@ import com.arklimits.shop.member.entity.Member;
 import com.arklimits.shop.member.security.CustomUser;
 import com.arklimits.shop.order.entity.Order;
 import com.arklimits.shop.order.repository.OrderRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,10 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+
+    public List<Order> findAll() {
+        return orderRepository.customFindAll();
+    }
 
     public Order saveOrder(String title, Integer price, Integer quantity, CustomUser user,
         String imageUrl) {

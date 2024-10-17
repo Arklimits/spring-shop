@@ -2,7 +2,6 @@ package com.arklimits.shop.order.controller;
 
 import com.arklimits.shop.member.security.CustomUser;
 import com.arklimits.shop.order.entity.Order;
-import com.arklimits.shop.order.repository.OrderRepository;
 import com.arklimits.shop.order.service.OrderService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderRepository orderRepository;
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/purchase")
@@ -37,7 +35,7 @@ public class OrderController {
 
     @GetMapping("/order/all")
     public String getOrderAll() {
-        List<Order> result = orderRepository.customFindAll();
+        List<Order> result = orderService.findAll();
         System.out.println(result);
 
         return "index";
