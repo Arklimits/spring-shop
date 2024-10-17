@@ -2,12 +2,15 @@ package com.arklimits.shop.member.controller;
 
 import com.arklimits.shop.member.dto.MemberDto;
 import com.arklimits.shop.member.entity.Member;
-import com.arklimits.shop.member.repository.MemberRepository;
 import com.arklimits.shop.member.security.CustomUser;
 import com.arklimits.shop.member.service.MemberService;
+import com.arklimits.shop.order.entity.Order;
+import com.arklimits.shop.order.service.OrderService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
+    private final OrderService orderService;
 
     @GetMapping("/register")
     public String registerPage() {
@@ -31,10 +34,15 @@ public class MemberController {
     }
 
     @GetMapping("/mypage")
-    public String myPage(Authentication auth) {
+    public String myPage(Authentication auth, Model model) {
         CustomUser principal = (CustomUser) auth.getPrincipal();
         System.out.println(auth.getPrincipal());
         System.out.println(principal.getDisplayName());
+
+        List<Order> result = orderService.findAll();
+
+        model.addAttribute("orders", result);
+
         return "mypage";
     }
 
