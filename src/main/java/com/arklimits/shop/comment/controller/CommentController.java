@@ -16,14 +16,14 @@ public class CommentController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/comment")
-    String postComment(Integer rating, String content, Long postId, Authentication auth) {
+    String postComment(Integer rating, String content, Long itemId, Authentication auth) {
         CustomUser user = (CustomUser) auth.getPrincipal();
         String username = user.getUsername();
         String displayName = user.getDisplayName();
 
-        commentService.saveComment(username, displayName, rating, content, postId);
+        commentService.saveComment(username, displayName, rating, content, itemId);
 
-        return "redirect:/detail/" + postId;
+        return "redirect:/detail/" + itemId;
     }
 
 }

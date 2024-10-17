@@ -1,6 +1,6 @@
 package com.arklimits.shop.comment.entity;
 
-import com.arklimits.shop.post.entity.Post;
+import com.arklimits.shop.item.entity.Item;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -47,6 +47,6 @@ public class Comment {
 
     @NonNull
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Post post;
+    @JoinColumn(name = "item_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Item item;
 }
