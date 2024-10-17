@@ -19,7 +19,7 @@
     <p>주문 번호: <span th:text="${order.id}">1</span></p>
     <p>가격: <span th:text="${order.price + '원'}">7억</span></p>
     <p>수량: <span th:text="${order.quantity + '개'}">1개</span></p>
-    <p>회원 ID: <span th:text="${order.memberId}"></span></p>
+    <p>주문자: <span th:text="${order.member.displayName}"></span></p>
     <p>주문 날짜: <span th:text="${order.orderDate}"></span></p>
 </div>
 
