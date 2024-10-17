@@ -11,12 +11,29 @@
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
 
+<!-- 디테일 표시 -->
 <div class="detail">
     <h4>상세페이지</h4>
     <img th:src="${item.imageUrl}">
     <h4 th:text="${item.title}">금도금 바지</h4>
     <p th:text="${item.price+'원'}">7억</p>
 </div>
+
+<!-- 주문 버튼 -->
+<div class="detail">
+    <form th:action="@{/purchase}" th:method="POST">
+        <input type="hidden" name="title" th:value="${item.title}">
+        <input type="hidden" name="price" th:value="${item.price}">
+        <input type="hidden" name="imageUrl" th:value="${item.imageUrl}">
+
+        <label for="quantity">수량 :</label>
+        <input type="number" id="quantity" name="quantity" min="1" value="1">
+
+        <button type="submit" class="order-button">주문하기</button>
+    </form>
+</div>
+
+<!-- 댓글 영역 -->
 <div class="comment-area">
     <h5>댓글</h5>
     <div class="comment-card" th:each="comment : ${comments}">
