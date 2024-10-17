@@ -2,7 +2,7 @@ package com.arklimits.shop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.arklimits.shop.member.dto.MemberDto;
+import com.arklimits.shop.member.dto.MemberDTO;
 import com.arklimits.shop.member.entity.Member;
 import com.arklimits.shop.member.mapper.MemberMapper;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ public class MemberMapperTest {
 
         System.out.println(member);
 
-        MemberDto memberDto = memberMapper.memberToMemberDto(member);
+        MemberDTO memberDto = memberMapper.memberToMemberDto(member);
 
         System.out.println(memberDto);
 

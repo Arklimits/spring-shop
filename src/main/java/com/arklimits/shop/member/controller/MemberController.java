@@ -1,10 +1,10 @@
 package com.arklimits.shop.member.controller;
 
-import com.arklimits.shop.member.dto.MemberDto;
+import com.arklimits.shop.member.dto.MemberDTO;
 import com.arklimits.shop.member.entity.Member;
 import com.arklimits.shop.member.security.CustomUser;
 import com.arklimits.shop.member.service.MemberService;
-import com.arklimits.shop.order.entity.Order;
+import com.arklimits.shop.order.dto.OrderDTO;
 import com.arklimits.shop.order.service.OrderService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class MemberController {
         System.out.println(auth.getPrincipal());
         System.out.println(principal.getDisplayName());
 
-        List<Order> result = orderService.findAll();
+        List<OrderDTO> result = orderService.findAll();
 
         model.addAttribute("orders", result);
 
@@ -54,7 +54,7 @@ public class MemberController {
 
     @GetMapping("/user/{id}")
     @ResponseBody
-    public MemberDto getUser(@PathVariable Long id) {
+    public MemberDTO getUser(@PathVariable Long id) {
         return memberService.getUserById(id);
     }
 }

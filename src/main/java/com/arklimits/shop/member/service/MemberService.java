@@ -1,6 +1,6 @@
 package com.arklimits.shop.member.service;
 
-import com.arklimits.shop.member.dto.MemberDto;
+import com.arklimits.shop.member.dto.MemberDTO;
 import com.arklimits.shop.member.entity.Member;
 import com.arklimits.shop.member.mapper.MemberMapper;
 import com.arklimits.shop.member.repository.MemberRepository;
@@ -22,7 +22,7 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public MemberDto getUserById(Long id) {
+    public MemberDTO getUserById(Long id) {
         var member = memberRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
 
