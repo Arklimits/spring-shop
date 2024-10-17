@@ -2,13 +2,11 @@ package com.arklimits.shop.item.service;
 
 import com.arklimits.shop.item.entity.Item;
 import com.arklimits.shop.item.repository.ItemRepository;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +19,8 @@ public class ItemService {
     }
 
     public Page<Item> searchItems(String keywords, Integer page) {
-        String encodedKeywords = UriUtils.encode(keywords, StandardCharsets.UTF_8);
-        return itemRepository.findPageByTitleContains(keywords, PageRequest.of(page - 1, 5));
+
+        return itemRepository.findPageByTitleFullTextIndex(keywords, PageRequest.of(page - 1, 5));
     }
 
     public void saveItem(String title, Integer price, String imageUrl) {
