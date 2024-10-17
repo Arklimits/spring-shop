@@ -1,10 +1,15 @@
 package com.arklimits.shop.comment.entity;
 
+import com.arklimits.shop.post.entity.Post;
 import jakarta.persistence.Column;
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -40,7 +45,8 @@ public class Comment {
     @NonNull
     private String content;
 
-    @Column(nullable = false)
     @NonNull
-    private Long parentId;
+    @ManyToOne
+    @JoinColumn(name = "post_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Post post;
 }

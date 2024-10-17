@@ -2,6 +2,7 @@ package com.arklimits.shop.comment.service;
 
 import com.arklimits.shop.comment.entity.Comment;
 import com.arklimits.shop.comment.repository.CommentRepository;
+import com.arklimits.shop.post.entity.Post;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,9 @@ public class CommentService {
 
     public void saveComment(String username, String displayName, Integer rating, String content,
         Long parentId) {
-        Comment comment = new Comment(username, displayName, rating, content, parentId);
+        Post post = new Post();
+        post.setId(parentId);
+        Comment comment = new Comment(username, displayName, rating, content, post);
 
         commentRepository.save(comment);
     }
