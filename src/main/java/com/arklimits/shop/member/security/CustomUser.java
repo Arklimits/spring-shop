@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 @Setter
 public class CustomUser extends User {
 
+    private Long id;
     private String displayName;
 
     public CustomUser(String username, String password,
