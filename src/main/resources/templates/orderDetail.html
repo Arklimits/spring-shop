@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="/main.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{ nav.html::navbar }"></div>
+
+<!-- 디테일 표시 -->
+<div class="detail">
+    <h4>주문 내역</h4>
+    <img th:src="${order.imageUrl}" alt="상품 이미지">
+    <h4 th:text="${order.title}">금도금 바지</h4>
+    <p>주문 번호: <span th:text="${order.id}">1</span></p>
+    <p>가격: <span th:text="${order.price + '원'}">7억</span></p>
+    <p>수량: <span th:text="${order.quantity + '개'}">1개</span></p>
+    <p>회원 ID: <span th:text="${order.memberId}"></span></p>
+    <p>주문 날짜: <span th:text="${order.orderDate}"></span></p>
+</div>
+
+</body>
+</html>
