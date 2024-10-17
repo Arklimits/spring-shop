@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-
-    Page<Item> findPageBy(Pageable pageable);
-
+    
     Page<Item> findPageByTitleContains(String title, Pageable pageable);
 }
