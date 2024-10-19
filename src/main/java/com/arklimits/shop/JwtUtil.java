@@ -16,11 +16,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtil {
 
-    @Value("${JWT_SECRET_KEY}")
-    private static String secretCode;
+    private static SecretKey key;
 
-    static final SecretKey key =
-        Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretCode));
+    @Value("${jwt.secret}")
+    private void setSecretCode(String secretCode) {
+        JwtUtil.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretCode));
+    }
 
     // JWT 만들어주는 함수
     public static String createToken(Authentication auth) {
@@ -28,7 +29,7 @@ public class JwtUtil {
         String authorities = auth.getAuthorities().stream().map(
                 GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
-        
+
         return Jwts.builder()
             // .claim(이름, 값) 으로 JWT에 데이터 추가 가능
             .claim("username", user.getUsername())

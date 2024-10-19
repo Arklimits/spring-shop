@@ -1,5 +1,6 @@
 package com.arklimits.shop.member.controller;
 
+import com.arklimits.shop.JwtUtil;
 import com.arklimits.shop.member.dto.MemberDTO;
 import com.arklimits.shop.member.entity.Member;
 import com.arklimits.shop.member.security.CustomUser;
@@ -72,6 +73,9 @@ public class MemberController {
         var auth = authenticationManagerBuilder.getObject().authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return "";
+        var jwt = JwtUtil.createToken(SecurityContextHolder.getContext().getAuthentication());
+        System.out.println(jwt);
+
+        return jwt;
     }
 }
