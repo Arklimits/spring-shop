@@ -7,13 +7,18 @@ import com.arklimits.shop.member.service.MemberService;
 import com.arklimits.shop.order.dto.OrderDTO;
 import com.arklimits.shop.order.service.OrderService;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -22,6 +27,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final OrderService orderService;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @GetMapping("/register")
     public String registerPage() {
@@ -56,5 +62,16 @@ public class MemberController {
     @ResponseBody
     public MemberDTO getUser(@PathVariable Long id) {
         return memberService.getUserById(id);
+    }
+
+    @PostMapping("/login/jwt")
+    @ResponseBody
+    public String loginJWT(@RequestBody Map<String, String> body) {
+        var authToken = new UsernamePasswordAuthenticationToken(body.get("username"),
+            body.get("password"));
+        var auth = authenticationManagerBuilder.getObject().authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        return "";
     }
 }
