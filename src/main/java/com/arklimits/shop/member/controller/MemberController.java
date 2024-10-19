@@ -46,6 +46,18 @@ public class MemberController {
         return "mypage";
     }
 
+    @GetMapping("/mypage/jwt")
+    @ResponseBody
+    String myPageJWT(Authentication auth) {
+        CustomUser user = (CustomUser) auth.getPrincipal();
+        System.out.println("성공!");
+        System.out.println(user);
+//        System.out.println(user.getDisplayName());
+        System.out.println(user.getAuthorities());
+
+        return "방구뿡";
+    }
+
     @PostMapping("/member")
     public String addMember(Member member) {
         memberService.addMember(member);

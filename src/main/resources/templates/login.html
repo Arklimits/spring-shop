@@ -45,5 +45,16 @@
   }
 </script>
 
+<button onclick="getMyPage()">JWT 마이페이지 주세요</button>
+<script>
+  function getMyPage() {
+    fetch('/mypage/jwt')
+    .then((r) => r.text())
+    .then((r) => {
+      console.log(r)
+    })
+  }
+</script>
+
 </body>
 </html>
