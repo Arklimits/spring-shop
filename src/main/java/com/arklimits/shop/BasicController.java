@@ -1,5 +1,7 @@
 package com.arklimits.shop;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +39,7 @@ public class BasicController {
 
     @PostMapping("/login/jwt")
     @ResponseBody
-    public String loginJWT(@RequestBody Map<String, String> body) {
+    public String loginJWT(@RequestBody Map<String, String> body, HttpServletResponse response) {
         var authToken = new UsernamePasswordAuthenticationToken(body.get("username"),
             body.get("password"));
         var auth = authenticationManagerBuilder.getObject().authenticate(authToken);
@@ -45,6 +47,13 @@ public class BasicController {
 
         var jwt = JwtUtil.createToken(SecurityContextHolder.getContext().getAuthentication());
         System.out.println(jwt);
+
+        Cookie cookie = new Cookie("jwt", jwt);
+        cookie.setMaxAge(10);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
 
         return jwt;
     }
