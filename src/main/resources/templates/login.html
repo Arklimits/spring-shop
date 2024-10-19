@@ -23,5 +23,38 @@
     <button type="submit">전송</button>
 </form>
 
+<form action="/login" method="POST">
+    <label>아이디<input id="username" name="username"></label>
+    <label>비밀번호<input id="password" name="password" type="password"></label>
+</form>
+
+<button type="submit" onclick="loginJWT()">전송</button>
+
+<script>
+  function loginJWT() {
+    fetch('/login/jwt', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        username: document.querySelector('#username').value,
+        password: document.querySelector('#password').value
+      })
+    }).then(r => r.text()).then((r) => {
+      console.log(r)
+    })
+  }
+</script>
+
+<button onclick="getMyPage()">JWT 마이페이지 주세요</button>
+<script>
+  function getMyPage() {
+    fetch('/mypage/jwt')
+    .then((r) => r.text())
+    .then((r) => {
+      console.log(r)
+    })
+  }
+</script>
+
 </body>
 </html>
