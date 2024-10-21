@@ -2,9 +2,7 @@ package com.arklimits.shop.item.controller;
 
 import com.arklimits.shop.comment.entity.Comment;
 import com.arklimits.shop.comment.service.CommentService;
-import com.arklimits.shop.item.S3Service;
 import com.arklimits.shop.item.entity.Item;
-import com.arklimits.shop.item.repository.ItemRepository;
 import com.arklimits.shop.item.service.ItemService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,16 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
 public class ItemController {
 
-    private final ItemRepository itemRepository;
     private final ItemService itemService;
     private final CommentService commentService;
-    private final S3Service s3Service;
 
     @GetMapping("/list")
     String getListPage(@RequestParam(required = false) String keywords,
@@ -48,9 +43,9 @@ public class ItemController {
         return "list";
     }
 
-    @GetMapping("/write")
-    String write(Model model) {
-        return "write";
+    @GetMapping("/upload")
+    String write() {
+        return "itemUpload";
     }
 
     @PostMapping("/add")
@@ -92,12 +87,5 @@ public class ItemController {
     public ResponseEntity<String> deleteItem(@RequestParam Long id) {
         itemService.deleteItem(id);
         return ResponseEntity.status(200).body("삭제완료");
-    }
-
-    @GetMapping("/presigned-url")
-    @ResponseBody
-    String getURL(@RequestParam String filename) {
-        var result = s3Service.createPresignedUrl("test/" + filename);
-        return result;
     }
 }

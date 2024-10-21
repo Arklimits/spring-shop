@@ -1,6 +1,5 @@
 package com.arklimits.shop.member.controller;
 
-import com.arklimits.shop.member.dto.MemberDTO;
 import com.arklimits.shop.member.entity.Member;
 import com.arklimits.shop.member.security.CustomUser;
 import com.arklimits.shop.member.service.MemberService;
@@ -12,9 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,27 +43,9 @@ public class MemberController {
         return "mypage";
     }
 
-    @GetMapping("/mypage/jwt")
-    @ResponseBody
-    String myPageJWT(Authentication auth) {
-        CustomUser user = (CustomUser) auth.getPrincipal();
-        System.out.println("성공!");
-        System.out.println(user);
-//        System.out.println(user.getDisplayName());
-        System.out.println(user.getAuthorities());
-
-        return "방구뿡";
-    }
-
     @PostMapping("/member")
     public String addMember(Member member) {
         memberService.addMember(member);
         return "redirect:list";
-    }
-
-    @GetMapping("/user/{id}")
-    @ResponseBody
-    public MemberDTO getUser(@PathVariable Long id) {
-        return memberService.getUserById(id);
     }
 }
