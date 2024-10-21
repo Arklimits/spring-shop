@@ -23,7 +23,7 @@ async function uploadAndSubmit(event) {
 
   const fileName = encodeURIComponent(file.name);
 
-  const response = await fetch(`/presigned-url?filename=${fileName}`);
+  const response = await fetch(`/api/item/presigned-url?filename=${fileName}`);
   const presignedUrl = await response.text();
 
   const uploadResult = await fetch(presignedUrl, {
