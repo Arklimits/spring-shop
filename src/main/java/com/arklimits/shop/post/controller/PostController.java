@@ -18,6 +18,6 @@ public class PostController {
     String notice(Model model) {
         List<Post> posts = postService.getAllPosts();
         model.addAttribute("posts", posts);
-        return "notice";
+        return "post/list";
     }
 }

@@ -40,18 +40,18 @@ public class ItemController {
             model.addAttribute("keywords", keywords);
         }
 
-        return "list";
+        return "item/list";
     }
 
     @GetMapping("/upload")
     String write() {
-        return "itemUpload";
+        return "item/upload";
     }
 
     @PostMapping("/add")
     String addPost(@RequestParam String title, @RequestParam Integer price, String imageUrl) {
         itemService.saveItem(title, price, imageUrl);
-        return "redirect:/list";
+        return "redirect:/item/list";
     }
 
     @GetMapping("/detail/{id}")
@@ -65,7 +65,7 @@ public class ItemController {
             model.addAttribute("comments", comments);
 
             return "detail";
-        }).orElse("redirect:/list");
+        }).orElse("redirect:/item/list");
     }
 
     @GetMapping("/edit/{id}")
@@ -73,14 +73,14 @@ public class ItemController {
         return itemService.findItemById(id).map(item -> {
             model.addAttribute("item", item);
             return "edit";
-        }).orElse("redirect:/list");
+        }).orElse("redirect:/item/list");
     }
 
     @PostMapping("/edit")
     public String editItem(@RequestParam Long id, @RequestParam String title,
         @RequestParam Integer price, @RequestParam String imageUrl) {
         itemService.editItem(id, title, price, imageUrl);
-        return "redirect:/list";
+        return "redirect:/item/list";
     }
 
     @DeleteMapping("/item")

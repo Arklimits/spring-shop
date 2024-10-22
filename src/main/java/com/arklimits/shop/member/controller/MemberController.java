@@ -22,12 +22,12 @@ public class MemberController {
 
     @GetMapping("/register")
     public String registerPage() {
-        return "register";
+        return "member/register";
     }
 
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "member/login";
     }
 
     @GetMapping("/mypage")
@@ -40,12 +40,12 @@ public class MemberController {
 
         model.addAttribute("orders", result);
 
-        return "mypage";
+        return "member/mypage";
     }
 
     @PostMapping("/member")
     public String addMember(Member member) {
         memberService.addMember(member);
-        return "redirect:list";
+        return "redirect:item/list";
     }
 }

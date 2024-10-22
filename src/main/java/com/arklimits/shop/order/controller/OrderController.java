@@ -28,6 +28,6 @@ public class OrderController {
         Order order = orderService.saveOrder(title, price, quantity, user, imageUrl);
         model.addAttribute("order", order);
 
-        return "orderDetail";
+        return "order/detail";
     }
 }
