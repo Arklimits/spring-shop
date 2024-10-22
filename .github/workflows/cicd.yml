@@ -28,6 +28,16 @@ jobs:
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: "+09:00"
 
+      - name: Set environment variables
+        run: |
+          echo "DB_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
+          echo "DB_ID=${{ secrets.DB_ID }}" >> $GITHUB_ENV
+          echo "DB_PW=${{ secrets.DB_PW }}" >> $GITHUB_ENV
+          echo "S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}" >> $GITHUB_ENV
+          echo "S3_BUCKET=${{ secrets.S3_BUCKET }}" >> $GITHUB_ENV
+          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> $GITHUB_ENV
+
       - name: Set artifact
         run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
 
