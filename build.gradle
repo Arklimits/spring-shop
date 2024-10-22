@@ -51,6 +51,10 @@ tasks.named('test') {
     enabled = false
 }
 
+jar {
+    enabled = false
+}
+
 test {
     systemProperty 'spring.profiles.active', 'test'
 }
