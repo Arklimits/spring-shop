@@ -22,7 +22,7 @@ public class BasicController {
 
     @GetMapping("/")
     String home() {
-        return "index";
+        return "main/index";
     }
 
     @GetMapping("/about")
