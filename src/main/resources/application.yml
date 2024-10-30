@@ -1,8 +1,4 @@
 spring:
-  # .env import
-  config:
-    import: optional:file:.env[.properties]
-
   application:
     name: shop
 
