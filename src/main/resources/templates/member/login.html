@@ -5,6 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>로그인</title>
     <link href="/main.css" rel="stylesheet">
 </head>
@@ -22,13 +24,19 @@
     <label>비밀번호<input id="password" name="password" type="password"></label>
 </form>
 
-<button type="submit" onclick="loginJWT()">전송</button>
+<button type="button" onclick="loginJWT()">전송</button>
 
 <script>
   function loginJWT() {
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
     fetch('/login/jwt', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        [csrfHeader]: csrfToken
+      },
       body: JSON.stringify({
         username: document.querySelector('#username').value,
         password: document.querySelector('#password').value
