@@ -37,15 +37,16 @@ public class ItemService {
     }
 
     public void editItem(Long id, String title, Integer price, String imageUrl) {
-        Optional<Item> optionalItem = itemRepository.findById(id);
-        if (optionalItem.isPresent()) {
-            Item item = optionalItem.get();
+        itemRepository.findById(id).ifPresent(item -> {
             item.setTitle(title);
             item.setPrice(price);
-            item.setImageUrl(imageUrl);
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                item.setImageUrl(imageUrl);
+            }
             itemRepository.save(item);
-        }
+        });
     }
+
 
     public void deleteItem(Long id) {
         itemRepository.deleteById(id);
