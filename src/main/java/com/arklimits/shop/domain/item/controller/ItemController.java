@@ -51,7 +51,7 @@ public class ItemController {
     @PostMapping("/add")
     String addPost(@RequestParam String title, @RequestParam Integer price, String imageUrl) {
         itemService.saveItem(title, price, imageUrl);
-        return "redirect:/item/list";
+        return "redirect:/list";
     }
 
     @GetMapping("/detail/{id}")
@@ -65,22 +65,23 @@ public class ItemController {
             model.addAttribute("comments", comments);
 
             return "item/detail";
-        }).orElse("redirect:/item/list");
+        }).orElse("redirect:/list");
     }
 
     @GetMapping("/edit/{id}")
     public String editPage(@PathVariable Long id, Model model) {
         return itemService.findItemById(id).map(item -> {
             model.addAttribute("item", item);
-            return "edit";
-        }).orElse("redirect:/item/list");
+            return "item/edit";
+        }).orElse("redirect:/list");
     }
 
     @PostMapping("/edit")
     public String editItem(@RequestParam Long id, @RequestParam String title,
         @RequestParam Integer price, @RequestParam String imageUrl) {
-        itemService.editItem(id, title, price, imageUrl);
-        return "redirect:/item/list";
+        itemService.editItem(id, title, price, imageUrl.isEmpty() ? null : imageUrl);
+
+        return "redirect:/detail/" + id;
     }
 
     @DeleteMapping("/item")
