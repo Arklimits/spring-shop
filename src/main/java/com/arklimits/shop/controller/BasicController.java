@@ -2,6 +2,7 @@ package com.arklimits.shop.controller;
 
 import com.arklimits.shop.util.JwtUtil;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -39,8 +40,8 @@ public class BasicController {
     }
 
     @PostMapping("/login/jwt")
-    @ResponseBody
-    public String loginJWT(@RequestBody Map<String, String> body, HttpServletResponse response) {
+    public String loginJWT(@RequestBody Map<String, String> body, HttpServletRequest request,
+        HttpServletResponse response) {
         var authToken = new UsernamePasswordAuthenticationToken(body.get("username"),
             body.get("password"));
         var auth = authenticationManagerBuilder.getObject().authenticate(authToken);
@@ -53,9 +54,11 @@ public class BasicController {
         cookie.setMaxAge(60 * 30);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
-
         response.addCookie(cookie);
 
-        return jwt;
+        // 이전 페이지로 리다이렉트
+        String referer = request.getHeader("Referer");
+        return "redirect:" + (referer != null ? referer
+            : "/item/list"); // referer가 없을 경우 기본 경로로 이동
     }
 }

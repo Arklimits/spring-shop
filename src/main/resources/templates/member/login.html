@@ -35,15 +35,17 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        [csrfHeader]: csrfToken
+        [csrfHeader]: csrfToken // CSRF 토큰을 헤더에 포함
       },
       body: JSON.stringify({
         username: document.querySelector('#username').value,
         password: document.querySelector('#password').value
       })
-    }).then(r => r.text()).then((r) => {
-      console.log(r)
-    })
+    }).then(r => {
+      if (r.ok) {
+        window.history.back();
+      } // 로그인 성공 시 이전 페이지로 돌아가기
+    });
   }
 </script>
 
