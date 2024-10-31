@@ -40,7 +40,8 @@ public class SecurityConfig {
 
             .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/**").permitAll())
             .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
-            .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"));
+            .logout(
+                logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").deleteCookies("jwt"));
         return http.build();
     }
 }
