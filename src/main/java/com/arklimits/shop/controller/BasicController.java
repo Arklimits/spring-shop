@@ -50,7 +50,7 @@ public class BasicController {
         System.out.println(jwt);
 
         Cookie cookie = new Cookie("jwt", jwt);
-        cookie.setMaxAge(10);
+        cookie.setMaxAge(60 * 30);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
 
