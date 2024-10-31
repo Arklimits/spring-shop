@@ -10,7 +10,7 @@ Spring Shop은 Spring Boot를 활용한 전자 상거래 플랫폼의 연습 프
 
 ### Link
 
-* [TBD](https://github.com/arklimits/spring-shop)
+* [http://ark-test.ap-northeast-2.elasticbeanstalk.com/](http://ark-test.ap-northeast-2.elasticbeanstalk.com/)
 
 ### 기술 스택
 
