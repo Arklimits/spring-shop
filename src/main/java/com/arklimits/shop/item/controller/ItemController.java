@@ -64,7 +64,7 @@ public class ItemController {
             List<Comment> comments = commentService.findCommentsOfPage(id);
             model.addAttribute("comments", comments);
 
-            return "detail";
+            return "item/detail";
         }).orElse("redirect:/item/list");
     }
 
