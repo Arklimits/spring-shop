@@ -23,7 +23,7 @@ public class CommentController {
 
         commentService.saveComment(username, displayName, rating, content, itemId);
 
-        return "redirect:/item/detail/" + itemId;
+        return "redirect:/detail/" + itemId;
     }
 
 }
