@@ -39,6 +39,10 @@ server:
       timeout: 3600s
       cookie:
         max-age: 3600s
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
 
 
 # JWT
