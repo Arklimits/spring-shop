@@ -28,18 +28,15 @@ jobs:
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: "+09:00"
 
-      - name: Set environment variables
-        run: |
-          echo "DB_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
-          echo "DB_ID=${{ secrets.DB_ID }}" >> $GITHUB_ENV
-          echo "DB_PW=${{ secrets.DB_PW }}" >> $GITHUB_ENV
-          echo "S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}" >> $GITHUB_ENV
-          echo "S3_BUCKET=${{ secrets.S3_BUCKET }}" >> $GITHUB_ENV
-          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> $GITHUB_ENV
-
       - name: Set artifact
         run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
 
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v20
@@ -48,6 +45,19 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: ShoppingMall
           environment_name: test-env
-          version_label: github-action-${{steps.current-time.outputs.formattedTime}}
+          version_label: github-action-${{ steps.current-time.outputs.formattedTime }}
           region: ap-northeast-2
           deployment_package: ./build/libs/${{env.artifact}}
+
+      - name: Update Elastic Beanstalk Environment Variables
+        run: |
+          aws elasticbeanstalk update-environment \
+            --application-name ShoppingMall \
+            --environment-name test-env \
+            --option-settings Namespace=aws:elasticbeanstalk:application:environment,OptionName=DB_URL,Value=${{ secrets.DB_URL }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=DB_ID,Value=${{ secrets.DB_ID }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=DB_PW,Value=${{ secrets.DB_PW }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=S3_ACCESS_KEY,Value=${{ secrets.S3_ACCESS_KEY }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=S3_SECRET_KEY,Value=${{ secrets.S3_SECRET_KEY }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=S3_BUCKET,Value=${{ secrets.S3_BUCKET }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=JWT_SECRET_KEY,Value=${{ secrets.JWT_SECRET_KEY }}
