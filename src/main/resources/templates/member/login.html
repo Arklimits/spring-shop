@@ -20,11 +20,12 @@
 </div>
 
 <form action="/login" method="POST">
-    <label>아이디<input id="username" name="username"></label>
-    <label>비밀번호<input id="password" name="password" type="password"></label>
+    <input type="text" id="username" name="username" placeholder="아이디" required>
+    <input type="password" id="password" name="password" placeholder="비밀번호" required onkeydown="if(event.key === 'Enter'){ loginJWT(); return false; }">
+    <button type="button" name="login" class="submit-button" onclick="loginJWT()">로그인</button>
 </form>
 
-<button type="button" onclick="loginJWT()">전송</button>
+<button class="submit-button" onclick="window.location.href='/register'">회원가입</button>
 
 <script>
   function loginJWT() {
@@ -42,21 +43,11 @@
         password: document.querySelector('#password').value
       })
     }).then(r => {
+      console.log(r);
       if (r.ok) {
-        window.history.back();
-      } // 로그인 성공 시 이전 페이지로 돌아가기
+        // window.history.back(); // 로그인 성공 시 이전 페이지로 돌아가기
+      }
     });
-  }
-</script>
-
-<button onclick="getMyPage()">JWT 마이페이지 주세요</button>
-<script>
-  function getMyPage() {
-    fetch('/mypage/jwt')
-    .then((r) => r.text())
-    .then((r) => {
-      console.log(r)
-    })
   }
 </script>
 
