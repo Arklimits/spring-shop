@@ -20,16 +20,6 @@ public class MemberController {
     private final MemberService memberService;
     private final OrderService orderService;
 
-    @GetMapping("/register")
-    public String registerPage() {
-        return "member/register";
-    }
-
-    @GetMapping("/login")
-    public String loginPage() {
-        return "member/login";
-    }
-
     @GetMapping("/mypage")
     public String myPage(Authentication auth, Model model) {
         CustomUser principal = (CustomUser) auth.getPrincipal();
