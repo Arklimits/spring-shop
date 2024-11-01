@@ -20,17 +20,21 @@ public class MemberController {
     private final MemberService memberService;
     private final OrderService orderService;
 
+
+    @GetMapping("/register")
+    public String registerPage() {
+        return "member/register";
+    }
+
     @GetMapping("/mypage")
     public String myPage(Authentication auth, Model model) {
         CustomUser principal = (CustomUser) auth.getPrincipal();
-        System.out.println(auth.getPrincipal());
-        System.out.println(principal.getDisplayName());
 
-        List<OrderDTO> result = orderService.findAll();
+        List<OrderDTO> result = orderService.findOrdersByMemberId(principal.getId());
 
         model.addAttribute("orders", result);
 
-        return "member/mypage";
+        return "member/myPage";
     }
 
     @PostMapping("/member")
