@@ -1,4 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap');
+@import url('navbar.css');
+
+
+/* 전체 페이지 기본 스타일 */
+body {
+  margin: 0; /* 기본 여백 제거 */
+  padding: 0; /* 기본 패딩 제거 */
+  font-family: 'Roboto', sans-serif; /* 기본 폰트 설정 */
+  background-color: #f0f0f0; /* 페이지 배경색 */
+}
+
+.content {
+  margin-top: 40px; /* 상단바의 높이에 맞춰 여백 조정 */
+  padding: 20px; /* 본문 내용에 패딩 추가 */
+}
 
 a {
   color: black;
