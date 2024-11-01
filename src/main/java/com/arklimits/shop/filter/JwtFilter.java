@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -38,7 +37,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // JWT 쿠키가 없을 경우 필터 체인을 그대로 진행
         if (jwtCookie.isEmpty()) {
-            logger.info("JWT 쿠키가 존재하지 않음.");
             filterChain.doFilter(request, response);
             return;
         }
@@ -66,15 +64,6 @@ public class JwtFilter extends OncePerRequestFilter {
         authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         SecurityContextHolder.getContext().setAuthentication(authToken);
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            logger.info("인증 성공: " + auth.getName());
-        } else {
-            logger.error("인증 정보가 설정되지 않음");
-        }
-
-        logger.info("인증 정보 확인 완료.");
 
         filterChain.doFilter(request, response);
     }
