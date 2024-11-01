@@ -59,7 +59,8 @@ public class JwtFilter extends OncePerRequestFilter {
             claim.get("username").toString(),
             "none",
             authorities);
-
+        
+        customUser.setId(claim.get("id", Double.class).longValue());
         customUser.setDisplayName(claim.get("displayName", String.class));
 
         var authToken = new UsernamePasswordAuthenticationToken(customUser, "", authorities);

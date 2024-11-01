@@ -32,6 +32,7 @@ public class JwtUtil {
 
         return Jwts.builder()
             // .claim(이름, 값) 으로 JWT에 데이터 추가 가능
+            .claim("id", user.getId())
             .claim("username", user.getUsername())
             .claim("displayName", user.getDisplayName())
             .claim("authorities", authorities)
