@@ -1,23 +1,20 @@
 package com.arklimits.shop.domain.member.entity;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Setter
 @Getter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Member {
 
     @Id
@@ -25,14 +22,21 @@ public class Member {
     private long id;
 
     @Column(unique = true, nullable = false)
-    @NonNull
+    @Nonnull
     private String username;
 
     @Column(nullable = false)
-    @NonNull
+    @Nonnull
     private String password;
 
     @Column(nullable = false)
-    @NonNull
+    @Nonnull
     private String displayName;
+
+    @Builder
+    public Member(String username, String password, String displayName) {
+        this.username = username;
+        this.password = password;
+        this.displayName = displayName;
+    }
 }
