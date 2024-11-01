@@ -11,48 +11,51 @@
 <body>
 <div th:replace="~{fragments/nav.html::navbar}"></div>
 
-<h4>마이페이지</h4>
+<div class="content">
 
-<div sec:authentication="principal"></div>
-<div sec:authentication="principal.username"></div>
 
-<div sec:authorize="hasAuthority('일반유저')">
-    <h4>이 유저는 일반유저임</h4>
+    <h4>마이페이지</h4>
+
+    <div sec:authentication="principal"></div>
+    <div sec:authentication="principal.username"></div>
+
+    <div sec:authorize="hasAuthority('일반유저')">
+        <h4>이 유저는 일반유저임</h4>
+    </div>
+
+    <h4>주문 내역</h4>
+
+    <div th:if="${orders.isEmpty()}">
+        <p>주문 내역이 없습니다.</p>
+    </div>
+
+    <table th:if="${!orders.isEmpty()}" class="order-table">
+        <thead>
+        <tr>
+            <th>주문 ID</th>
+            <th>이미지</th>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>수량</th>
+            <th>주문자</th>
+            <th>주문 날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td>
+                <img th:src="${order.imageUrl}" alt="상품 이미지" style="width: 100px; height: auto;">
+            </td>
+            <td th:text="${order.title}"></td>
+            <td th:text="${order.price} + '원'"></td>
+            <td th:text="${order.quantity}"></td>
+            <td th:text="${order.memberDisplayName}"></td>
+            <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-<h4>주문 내역</h4>
-
-<div th:if="${orders.isEmpty()}">
-    <p>주문 내역이 없습니다.</p>
-</div>
-
-<table th:if="${!orders.isEmpty()}" class="order-table">
-    <thead>
-    <tr>
-        <th>주문 ID</th>
-        <th>이미지</th>
-        <th>상품명</th>
-        <th>가격</th>
-        <th>수량</th>
-        <th>주문자</th>
-        <th>주문 날짜</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="order : ${orders}">
-        <td th:text="${order.id}"></td>
-        <td>
-            <img th:src="${order.imageUrl}" alt="상품 이미지" style="width: 100px; height: auto;">
-        </td>
-        <td th:text="${order.title}"></td>
-        <td th:text="${order.price} + '원'"></td>
-        <td th:text="${order.quantity}"></td>
-        <td th:text="${order.memberDisplayName}"></td>
-        <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-    </tr>
-    </tbody>
-</table>
-
 
 </body>
 </html>
