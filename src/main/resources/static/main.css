@@ -4,6 +4,10 @@ a {
   text-decoration: none;
 }
 
+a:visited {
+  color: black
+}
+
 label {
   display: inline-block;
   margin-right: 10px;
