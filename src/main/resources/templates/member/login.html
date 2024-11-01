@@ -15,9 +15,7 @@
 
 <h4>로그인</h4>
 
-<div th:if="${param.error}">
-    <h4>아이디나 비밀번호 틀렸음</h4>
-</div>
+<div id="error-message" style="color: red; display: none;">아이디나 비밀번호가 잘못되었습니다.</div>
 
 <form action="/login" method="POST">
     <input type="text" id="username" name="username" placeholder="아이디" required>
@@ -36,17 +34,27 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        [csrfHeader]: csrfToken // CSRF 토큰을 헤더에 포함
+        [csrfHeader]: csrfToken
       },
       body: JSON.stringify({
         username: document.querySelector('#username').value,
         password: document.querySelector('#password').value
       })
-    }).then(r => {
-      console.log(r);
-      if (r.ok) {
-        // window.history.back(); // 로그인 성공 시 이전 페이지로 돌아가기
+    }).then(response => {
+      return response.json().then(data => ({
+        status: response.status,
+        body: data
+      }));
+    }).then(({status, body}) => {
+      if (status === 200) {
+        document.getElementById('error-message').style.display = 'none';
+        window.history.back(); // 로그인 성공 시 이전 페이지로 돌아가기
+      } else if (status === 401) {
+        document.getElementById('error-message').textContent = body.message || "아이디나 비밀번호가 잘못되었습니다.";
+        document.getElementById('error-message').style.display = 'block';
       }
+    }).catch(error => {
+      console.error('로그인 요청 실패:', error);
     });
   }
 </script>

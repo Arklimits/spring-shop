@@ -1,4 +1,4 @@
-package com.arklimits.shop.filter;
+package com.arklimits.shop.security;
 
 import com.arklimits.shop.domain.member.security.CustomUser;
 import com.arklimits.shop.util.JwtUtil;
