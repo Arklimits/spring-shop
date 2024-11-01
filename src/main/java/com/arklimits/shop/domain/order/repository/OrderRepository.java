@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    List<Order> findByMember_Id(Long memberId);
+
     @Query(value = "SELECT s FROM Order s JOIN FETCH s.member")
     List<Order> customFindAll();
 }
