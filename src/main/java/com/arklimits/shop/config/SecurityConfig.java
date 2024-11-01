@@ -1,6 +1,7 @@
 package com.arklimits.shop.config;
 
 import com.arklimits.shop.filter.JwtFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,14 +16,16 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtFilter jwtFilter;
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    //추가
     @Bean
     public CsrfTokenRepository csrfTokenRepository() {
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
@@ -36,7 +39,7 @@ public class SecurityConfig {
             .sessionManagement(
                 (session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            .addFilterBefore(new JwtFilter(), ExceptionTranslationFilter.class)
+            .addFilterBefore(jwtFilter, ExceptionTranslationFilter.class)
 
             .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/**").permitAll())
             .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
