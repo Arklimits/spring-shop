@@ -24,20 +24,20 @@ public class ItemController {
     private final CommentService commentService;
 
     @GetMapping("/list")
-    String getListPage(@RequestParam(required = false) String keywords,
+    String getListPage(@RequestParam(required = false) String keyword,
         @RequestParam(defaultValue = "1") Integer page,
         Model model) {
 
-        Page<Item> result = (keywords != null && !keywords.isBlank())
-            ? itemService.searchItems(keywords, page)
+        Page<Item> result = (keyword != null && !keyword.isBlank())
+            ? itemService.searchItems(keyword, page)
             : itemService.listAllItems(page);
 
-        model.addAttribute("items", result);
+        model.addAttribute("items", result.getContent());
         model.addAttribute("page", page);
         model.addAttribute("pages", result.getTotalPages());
 
-        if (keywords != null && !keywords.isBlank()) {
-            model.addAttribute("keywords", keywords);
+        if (keyword != null && !keyword.isBlank()) {
+            model.addAttribute("keyword", keyword);
         }
 
         return "item/list";

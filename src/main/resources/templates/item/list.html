@@ -11,23 +11,17 @@
 <body>
 <div th:replace="~{ fragments/nav.html::navbar }"></div>
 
-<div class="searchbar">
-    <form action="/list" method="GET">
-        <input name="keywords" style="display: inline">
-        <button>검색</button>
-    </form>
-</div>
-
-<div class="card" th:each="i: ${items}">
-    <img th:src="${i.imageUrl}">
-    <div>
-        <a th:href="@{'/detail/' + ${i.id}}">
-            <h4 th:text="${i.title}">바지</h4>
-        </a>
-        <p th:text="${i.price}">7억</p>
-        <div sec:authorize="isAuthenticated()">
-            <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
-            <a th:onclick="fetch('/item?id=[[${i.id}]]', {
+<div class="content">
+    <div class="card" th:each="i: ${items}">
+        <img th:src="${i.imageUrl}">
+        <div>
+            <a th:href="@{'/detail/' + ${i.id}}">
+                <h4 th:text="${i.title}">바지</h4>
+            </a>
+            <p th:text="${i.price}">7억</p>
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
+                <a th:onclick="fetch('/item?id=[[${i.id}]]', {
                 method : 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,15 +32,18 @@
                         location.reload();
                     })
                 ">🗑️</a>
+            </div>
         </div>
     </div>
 </div>
 
+
 <!-- 페이지 번호 버튼 -->
-<div>
+<div th:if="${#lists.size(items) > 0}">
     <ul class="pagination justify-content-center">
+        <p th:text="${#lists.size(items)}"></p>
         <li class="page-item" th:each="i : ${#numbers.sequence(1, pages)}" th:classappend="${page == i} ? 'active'">
-            <a class="page-link" th:href="@{/list(keywords=${keywords}, page=${i})}" th:text="${i}">1</a>
+            <a class="page-link" th:href="@{/list(keyword=${keyword}, page=${i})}" th:text="${i}">1</a>
         </li>
     </ul>
 </div>
