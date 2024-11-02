@@ -41,7 +41,6 @@
 <!-- 페이지 번호 버튼 -->
 <div th:if="${#lists.size(items) > 0}">
     <ul class="pagination justify-content-center">
-        <p th:text="${#lists.size(items)}"></p>
         <li class="page-item" th:each="i : ${#numbers.sequence(1, pages)}" th:classappend="${page == i} ? 'active'">
             <a class="page-link" th:href="@{/list(keyword=${keyword}, page=${i})}" th:text="${i}">1</a>
         </li>
