@@ -7,7 +7,7 @@ Spring Shop은 Spring Boot를 활용한 전자 상거래 플랫폼의 연습 프
 
 - **RESTful API 구현**: 클린 코드와 테스트 가능한 API 개발을 목표로 하고 있습니다.
 - **클라우드 통합**: Azure MySQL과 AWS S3를 활용하여 실제 배포 환경을 가정한 데이터 관리 및 파일 업로드 기능을 포함합니다.
-
+- **JWT 인증**: JWT를 활용하여 사용자 인증을 수행하며, 보안성을 위해 JWT 토큰을 HTTP-Only 쿠키에 저장합니다. 이를 통해 클라이언트와 서버 간의 통신에서 토큰을 안전하게 관리하며, 쿠키에 저장된 JWT는 서버 측에서 검증되어 사용자의 인증 상태를 유지합니다.
 ### Link
 
 * [http://ark-test.ap-northeast-2.elasticbeanstalk.com/](http://ark-test.ap-northeast-2.elasticbeanstalk.com/)
