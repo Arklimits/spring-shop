@@ -12,6 +12,9 @@
 
 ### 🔧 서비스 구조도
 
+![image](https://github.com/user-attachments/assets/593eab72-043f-4f73-88b9-1e1348c0ddb0)
+
+
 ---
 
 ### 📚 기술 스택
