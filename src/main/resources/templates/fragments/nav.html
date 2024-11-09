@@ -24,13 +24,13 @@
                 </li>
             </ul>
 
-            <form class="d-flex" action="/list" method="GET" style="padding-right: 10px">
+            <form class="d-flex" action="/list" method="GET" style="padding-right: 5px">
                 <input id="searchInput" class="form-control me-2" type="search" name="keyword" placeholder="검색" aria-label="Search" pattern=".{2,}" title="검색어는 최소 2글자 이상이어야 합니다." autocomplete="off" required>
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
 
             <div sec:authorize="!isAuthenticated()">
-                <a class="btn btn-outline-info" href="/login">Login</a>
+                <a class="btn btn-outline-secondary" href="/login">Login</a>
             </div>
 
             <div sec:authorize="isAuthenticated()">
@@ -46,5 +46,7 @@
                     }
                 });">Logout</a>
             </div>
+        </div>
     </div>
 </nav>
+
