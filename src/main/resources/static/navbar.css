@@ -1,15 +1,16 @@
 .nav {
-  position: fixed; /* 상단에 고정 */
-  top: 0; /* 페이지 상단에 위치 */
-  left: 0; /* 왼쪽에 위치 */
-  right: 0; /* 오른쪽까지 확장 */
-  display: flex;
-  justify-content: space-between; /* 로고와 링크들 간의 공간을 균등하게 분배 */
-  align-items: center; /* 수직 정렬 */
   background-color: #dfdfdf; /* 상단바 배경색 */
-  padding: 10px 20px; /* 상단바 패딩 */
-  font-family: 'Roboto', sans-serif; /* 폰트 설정 */
-  z-index: 1000; /* 다른 요소들보다 위에 보이도록 설정 */
+  font-family: 'Montserrat';
+}
+
+.nav a {
+  margin-right: 10px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
+
+.nav .logo {
+  font-weight: 800;
 }
 
 .search-bar {
