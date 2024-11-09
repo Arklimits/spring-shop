@@ -10,18 +10,19 @@
 </head>
 <body>
 <div th:replace="~{ fragments/nav.html::navbar }"></div>
-
-<div class="content">
-    <div class="card" th:each="i: ${items}">
-        <img th:src="${i.imageUrl}">
-        <div>
-            <a th:href="@{'/detail/' + ${i.id}}">
-                <h4 th:text="${i.title}">바지</h4>
-            </a>
-            <p th:text="${i.price}">7억</p>
-            <div sec:authorize="isAuthenticated()">
-                <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
-                <a th:onclick="fetch('/item?id=[[${i.id}]]', {
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="i: ${items}">
+            <div class="card h-100">
+                <img th:src="${i.imageUrl}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a th:href="@{'/detail/' + ${i.id}}">
+                        <h4 th:text="${i.title}">바지</h4>
+                    </a>
+                    <p th:text="${i.price}">7억</p>
+                    <div sec:authorize="isAuthenticated()">
+                        <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
+                        <a th:onclick="fetch('/item?id=[[${i.id}]]', {
                 method : 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,11 +33,12 @@
                         location.reload();
                     })
                 ">🗑️</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- 페이지 번호 버튼 -->
 <div th:if="${#lists.size(items) > 0}">
