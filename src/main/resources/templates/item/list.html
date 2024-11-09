@@ -11,7 +11,12 @@
 <body>
 <div th:replace="~{ fragments/nav.html::navbar }"></div>
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    
+    <div th:if="${#lists.size(items) == 0}">
+        <h1>검색결과 없음</h1>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${#lists.size(items) > 0}">
         <div class="col" th:each="i: ${items}">
             <div class="card h-100">
                 <img th:src="${i.imageUrl}" class="card-img-top" alt="...">
@@ -19,7 +24,7 @@
                     <a th:href="@{'/detail/' + ${i.id}}">
                         <h4 th:text="${i.title}">바지</h4>
                     </a>
-                    <p th:text="${i.price}">7억</p>
+                    <p th:text="${i.price} + '원'">7억</p>
                     <div sec:authorize="isAuthenticated()">
                         <a th:href="@{'/edit/' + ${i.id}}">✏️</a>
                         <a th:onclick="fetch('/item?id=[[${i.id}]]', {
