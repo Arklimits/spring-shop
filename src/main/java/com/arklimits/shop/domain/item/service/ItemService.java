@@ -15,12 +15,12 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     public Page<Item> listAllItems(Integer page) {
-        return itemRepository.findAll(PageRequest.of(page - 1, 5));
+        return itemRepository.findAll(PageRequest.of(page - 1, 6));
     }
 
     public Page<Item> searchItems(String keywords, Integer page) {
 
-        return itemRepository.findPageByTitleFullTextIndex(keywords, PageRequest.of(page - 1, 5));
+        return itemRepository.findPageByTitleFullTextIndex(keywords, PageRequest.of(page - 1, 6));
     }
 
     public void saveItem(String title, Integer price, String imageUrl) {
