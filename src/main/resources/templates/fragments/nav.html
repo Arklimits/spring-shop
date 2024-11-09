@@ -1,6 +1,6 @@
-<nav class="nav navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
-        <a class="navbar-brand logo" href="/">SpringMall</a>
+        <a class="navbar-brand" href="/">SpringMall</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,9 +10,9 @@
                     <a class="nav-link active" aria-current="page" href="/list">List</a>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" name="keyword" placeholder="검색" aria-label="Search" autocomplete="off">
-                <button class="btn btn-outline-success">Search</button>
+            <form class="d-flex" action="/list" method="GET">
+                <input class="form-control me-2" type="search" name="keyword" placeholder="검색" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
 
