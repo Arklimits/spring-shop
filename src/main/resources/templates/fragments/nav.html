@@ -1,22 +1,29 @@
-<div class="nav" th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <a class="logo" href="/">SpringMall</a>
-    <a href="/list">List</a>
+<nav class="nav navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div class="container-fluid">
+        <a class="navbar-brand logo" href="/">SpringMall</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/list">List</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" name="keyword" placeholder="검색" aria-label="Search" autocomplete="off">
+                <button class="btn btn-outline-success">Search</button>
+            </form>
+        </div>
 
-    <div class="search-bar">
-        <form class="search-form" action="/list" method="GET">
-            <input type="search" name="keyword" class="form-control textInput" autocomplete="off" placeholder="찾기" value="">
-            <button>검색</button>
-        </form>
-    </div>
+        <div sec:authorize="!isAuthenticated()">
+            <a href="/login">Login</a>
+        </div>
 
-    <div sec:authorize="!isAuthenticated()">
-        <a href="/login">Login</a>
-    </div>
-
-    <div sec:authorize="isAuthenticated()">
-        <a href="/upload">Upload</a>
-        <a href="/mypage">MyPage</a>
-        <a href="#" th:onclick="fetch('/logout', {
+        <div sec:authorize="isAuthenticated()">
+            <a href="/upload">Upload</a>
+            <a href="/mypage">MyPage</a>
+            <a href="#" th:onclick="fetch('/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -27,5 +34,6 @@
                 window.location.href = '/';
             }
         });">Logout</a>
+        </div>
     </div>
-</div>
+</nav>
