@@ -10,8 +10,8 @@
                     <a class="nav-link active" aria-current="page" href="/list">List</a>
                 </li>
             </ul>
-            <form class="d-flex" action="/list" method="GET">
-                <input class="form-control me-2" type="search" name="keyword" placeholder="검색" aria-label="Search">
+            <form class="d-flex" action="/list" method="GET" onsubmit="return validateSearch()">
+                <input id="searchInput" class="form-control me-2" type="search" name="keyword" placeholder="검색" aria-label="Search" pattern=".{2,}" title="검색어는 최소 2글자 이상이어야 합니다." autocomplete="off" required>
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
