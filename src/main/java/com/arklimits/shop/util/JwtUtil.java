@@ -5,12 +5,17 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -43,10 +48,26 @@ public class JwtUtil {
     }
 
     // JWT 까주는 함수
-    public static Claims extractToken(String token) {
+    public static UsernamePasswordAuthenticationToken extractToken(String token,
+        HttpServletRequest request) {
         Claims claims = Jwts.parser().verifyWith(key).build()
             .parseSignedClaims(token).getPayload();
-        return claims;
+
+        var arr = claims.get("authorities").toString().split(",");
+        var authorities = Arrays.stream(arr).map(SimpleGrantedAuthority::new).toList();
+
+        CustomUser customUser = new CustomUser(
+            claims.get("username").toString(),
+            "none",
+            authorities);
+
+        customUser.setId(claims.get("id", Double.class).longValue());
+        customUser.setDisplayName(claims.get("displayName", String.class));
+
+        var authToken = new UsernamePasswordAuthenticationToken(customUser, "", authorities);
+        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+        return authToken;
     }
 
 }

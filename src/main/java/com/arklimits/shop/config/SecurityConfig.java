@@ -1,6 +1,7 @@
 package com.arklimits.shop.config;
 
-import com.arklimits.shop.filter.JwtFilter;
+import com.arklimits.shop.filter.ApiJwtFilter;
+import com.arklimits.shop.filter.AuthJwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
@@ -19,7 +21,8 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtFilter jwtFilter;
+    private final ApiJwtFilter apiJwtFilter;
+    private final AuthJwtFilter authJwtFilter;
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -39,7 +42,8 @@ public class SecurityConfig {
             .sessionManagement(
                 (session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            .addFilterBefore(jwtFilter, ExceptionTranslationFilter.class)
+            .addFilterBefore(apiJwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(authJwtFilter, ExceptionTranslationFilter.class)
 
             .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/**").permitAll())
             .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
