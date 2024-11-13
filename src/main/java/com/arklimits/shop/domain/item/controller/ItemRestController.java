@@ -1,11 +1,14 @@
 package com.arklimits.shop.domain.item.controller;
 
 import com.arklimits.shop.domain.item.S3Service;
+import com.arklimits.shop.domain.item.dto.EditItemDTO;
 import com.arklimits.shop.domain.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +20,18 @@ public class ItemRestController {
 
     private final ItemService itemService;
     private final S3Service s3Service;
+
+
+    @PutMapping
+    public ResponseEntity<?> editItem(
+        @RequestBody EditItemDTO editItemDto) {
+
+        System.out.println(editItemDto);
+        itemService.editItem(editItemDto.getId(), editItemDto.getTitle(), editItemDto.getPrice(),
+            editItemDto.getImageUrl());
+
+        return ResponseEntity.ok().build();
+    }
 
     @DeleteMapping
     public ResponseEntity<String> deleteItem(@RequestParam Long id) {

@@ -7,10 +7,8 @@ import com.arklimits.shop.domain.item.service.ItemService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,19 +72,5 @@ public class ItemController {
             model.addAttribute("item", item);
             return "item/edit";
         }).orElse("redirect:/list");
-    }
-
-    @PostMapping("/edit")
-    public String editItem(@RequestParam Long id, @RequestParam String title,
-        @RequestParam Integer price, @RequestParam String imageUrl) {
-        itemService.editItem(id, title, price, imageUrl.isEmpty() ? null : imageUrl);
-
-        return "redirect:/detail/" + id;
-    }
-
-    @DeleteMapping("/item")
-    public ResponseEntity<String> deleteItem(@RequestParam Long id) {
-        itemService.deleteItem(id);
-        return ResponseEntity.status(200).body("삭제완료");
     }
 }
