@@ -6,6 +6,11 @@ spring:
   application:
     name: shop
 
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
   # database connection
   datasource:
     url: ${DB_URL}
