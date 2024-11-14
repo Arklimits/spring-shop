@@ -24,10 +24,11 @@ public class ItemRestController {
     private final S3Service s3Service;
 
     @PostMapping
-    String addItem(@RequestBody AddItemDTO addItemDTO) {
+    public ResponseEntity<?> addItem(@RequestBody AddItemDTO addItemDTO) {
         itemService.saveItem(addItemDTO.getTitle(), addItemDTO.getPrice(),
             addItemDTO.getImageUrl());
-        return "redirect:/list";
+
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
