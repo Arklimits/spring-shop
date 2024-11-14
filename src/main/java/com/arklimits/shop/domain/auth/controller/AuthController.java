@@ -1,4 +1,4 @@
-package com.arklimits.shop.controller;
+package com.arklimits.shop.domain.auth.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -1,5 +1,6 @@
-package com.arklimits.shop.controller;
+package com.arklimits.shop.domain.auth.controller;
 
+import com.arklimits.shop.domain.auth.dto.LoginRequestDTO;
 import com.arklimits.shop.util.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,24 +27,29 @@ public class AuthRestController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> loginJWT(@RequestBody Map<String, String> body,
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequestDTO loginRequest,
         HttpServletRequest request, HttpServletResponse response) {
         try {
-            var authToken = new UsernamePasswordAuthenticationToken(body.get("username"),
-                body.get("password"));
+            var authToken = new UsernamePasswordAuthenticationToken(
+                loginRequest.getUsername(),
+                loginRequest.getPassword()
+            );
             var auth = authenticationManagerBuilder.getObject().authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(auth);
 
             var jwt = JwtUtil.createToken(SecurityContextHolder.getContext().getAuthentication());
 
+            // HttpOnly 쿠키에 JWT 저장
             Cookie cookie = new Cookie("jwt", jwt);
             cookie.setMaxAge(60 * 30); // 30분
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             response.addCookie(cookie);
 
+            // LocalStorage 에 저장하기 위해, Swagger UI 용도 JWT 반환 
             Map<String, String> successResponse = new HashMap<>();
             successResponse.put("message", "로그인 성공");
+            successResponse.put("jwt", jwt);
             return ResponseEntity.ok(successResponse);
 
         } catch (BadCredentialsException e) {
