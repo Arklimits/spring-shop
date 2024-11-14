@@ -5,6 +5,7 @@ import com.arklimits.shop.filter.AuthJwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -38,7 +39,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf((csrf) -> csrf.csrfTokenRepository(csrfTokenRepository()))
+        http.csrf((csrf) -> csrf
+                .requireCsrfProtectionMatcher(new CsrfRequiredMatcher())
+                .csrfTokenRepository(csrfTokenRepository()))
             .sessionManagement(
                 (session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
@@ -46,14 +49,16 @@ public class SecurityConfig {
             .addFilterBefore(authJwtFilter, ExceptionTranslationFilter.class)
 
             .authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/auth/login", "/swagger-ui/**").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll())
-            .formLogin((formLogin) -> formLogin.loginPage("/login")
-                .successHandler((request, response, authentication) -> {
+            .exceptionHandling(exception -> exception
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
                     response.setContentType("application/json");
-                    response.getWriter().write("{\"status\": \"success\"}");
-                }))
+                    response.getWriter().write("{\"error\": \"Unauthorized Request\"}");
+                })
+            )
             .logout(
                 logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").deleteCookies("jwt"));
         return http.build();
