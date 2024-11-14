@@ -21,7 +21,7 @@ public class ItemController {
     private final CommentService commentService;
 
     @GetMapping("/list")
-    String getListPage(@RequestParam(required = false) String keyword,
+    String showListPage(@RequestParam(required = false) String keyword,
         @RequestParam(defaultValue = "1") Integer page,
         Model model) {
 
@@ -41,12 +41,12 @@ public class ItemController {
     }
 
     @GetMapping("/upload")
-    String write() {
+    String showUploadPage() {
         return "item/upload";
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
+    public String showDetailPage(@PathVariable Long id, Model model) {
         return itemService.findItemById(id).map(item -> {
             // 아이템 정보 추가
             model.addAttribute("item", item);
@@ -60,7 +60,7 @@ public class ItemController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editPage(@PathVariable Long id, Model model) {
+    public String showEditPage(@PathVariable Long id, Model model) {
         return itemService.findItemById(id).map(item -> {
             model.addAttribute("item", item);
             return "item/edit";
