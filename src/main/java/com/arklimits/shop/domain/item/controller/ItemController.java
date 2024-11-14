@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -44,12 +43,6 @@ public class ItemController {
     @GetMapping("/upload")
     String write() {
         return "item/upload";
-    }
-
-    @PostMapping("/add")
-    String addPost(@RequestParam String title, @RequestParam Integer price, String imageUrl) {
-        itemService.saveItem(title, price, imageUrl);
-        return "redirect:/list";
     }
 
     @GetMapping("/detail/{id}")
