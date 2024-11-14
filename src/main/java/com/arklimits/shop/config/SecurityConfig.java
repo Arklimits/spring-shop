@@ -46,9 +46,14 @@ public class SecurityConfig {
             .addFilterBefore(authJwtFilter, ExceptionTranslationFilter.class)
 
             .authorizeHttpRequests((authorize) -> authorize
+                .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll())
-            .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
+            .formLogin((formLogin) -> formLogin.loginPage("/login")
+                .successHandler((request, response, authentication) -> {
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"status\": \"success\"}");
+                }))
             .logout(
                 logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").deleteCookies("jwt"));
         return http.build();
