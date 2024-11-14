@@ -16,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,8 +25,7 @@ public class AuthRestController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @PostMapping("/jwtLogin")
-    @ResponseBody
+    @PostMapping("/login")
     public ResponseEntity<Map<String, String>> loginJWT(@RequestBody Map<String, String> body,
         HttpServletRequest request, HttpServletResponse response) {
         try {

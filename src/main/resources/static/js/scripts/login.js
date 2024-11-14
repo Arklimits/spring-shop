@@ -4,7 +4,7 @@ function loginJWT() {
   const csrfHeader = document.querySelector(
       'meta[name="_csrf_header"]').getAttribute('content');
 
-  fetch('/api/auth/jwtLogin', {
+  fetch('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
