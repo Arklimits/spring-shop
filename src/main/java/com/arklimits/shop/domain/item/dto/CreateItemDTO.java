@@ -8,10 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class EditItemDTO {
-
-    @Schema(description = "아이템 ID", example = "1")
-    private Long id;
+public class CreateItemDTO {
 
     @Schema(description = "아이템 제목", example = "Sample Item")
     private String title;
