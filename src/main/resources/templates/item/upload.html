@@ -5,6 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>Document</title>
     <link href="/main.css" rel="stylesheet">
     <script th:src="@{/js/scripts/imageUpload.js}"></script>
@@ -18,7 +20,7 @@
             <img class="image-preview" id="imagePreview" src="https://placehold.co/400">
         </div>
 
-        <form id="uploadForm" th:action="@{/add}" th:method="POST" onsubmit="return uploadAndSubmit(event)">
+        <form id="uploadForm" th:action="@{/api/item}" th:method="POST" onsubmit="return uploadAndSubmit(event, 'POST')">
             <div class="upload-table">
                 <label for="title">상품명:</label>
                 <input id="title" name="title">

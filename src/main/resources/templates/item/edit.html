@@ -20,7 +20,7 @@
         <div class="image-container">
             <img class="image-preview" id="imagePreview" th:src="${item.imageUrl}">
         </div>
-        <form id="uploadForm" name="editItemDTO" th:action="@{/api/item}" th:method="PUT" onsubmit="return uploadAndSubmit(event)">
+        <form id="uploadForm" name="editItemDTO" th:action="@{/api/item}" th:method="PUT" onsubmit="return uploadAndSubmit(event, 'PUT')">
             <input th:value="${item.id}" style="display: none" name="id">
 
             <div class="upload-table">

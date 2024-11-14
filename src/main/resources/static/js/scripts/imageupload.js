@@ -1,4 +1,16 @@
-async function uploadAndSubmit(event) {
+// 미리보기 함수
+function previewImage(e) {
+  if (e.files && e.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById('imagePreview').src = e.target.result;
+    }
+    reader.readAsDataURL(e.files[0]);
+  }
+}
+
+// 파일 업로드와 폼 제출 처리
+async function uploadAndSubmit(event, method = 'POST') {
   console.log("폼 제출 시작");
   event.preventDefault();
 
@@ -44,7 +56,7 @@ async function uploadAndSubmit(event) {
   });
 
   fetch('/api/item', {
-    method: 'PUT',
+    method: method,
     headers: {
       'Content-Type': 'application/json',
       [csrfHeader]: csrfToken
