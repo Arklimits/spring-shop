@@ -45,7 +45,9 @@ public class SecurityConfig {
             .addFilterBefore(apiJwtFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(authJwtFilter, ExceptionTranslationFilter.class)
 
-            .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/**").permitAll())
+            .authorizeHttpRequests((authorize) -> authorize
+                .requestMatchers("/api/**").authenticated()
+                .anyRequest().permitAll())
             .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
             .logout(
                 logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").deleteCookies("jwt"));
