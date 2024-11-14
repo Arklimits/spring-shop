@@ -1,7 +1,7 @@
 package com.arklimits.shop.domain.item.controller;
 
 import com.arklimits.shop.domain.item.S3Service;
-import com.arklimits.shop.domain.item.dto.AddItemDTO;
+import com.arklimits.shop.domain.item.dto.CreateItemDTO;
 import com.arklimits.shop.domain.item.dto.EditItemDTO;
 import com.arklimits.shop.domain.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +24,9 @@ public class ItemRestController {
     private final S3Service s3Service;
 
     @PostMapping
-    public ResponseEntity<?> addItem(@RequestBody AddItemDTO addItemDTO) {
-        itemService.saveItem(addItemDTO.getTitle(), addItemDTO.getPrice(),
-            addItemDTO.getImageUrl());
+    public ResponseEntity<?> addItem(@RequestBody CreateItemDTO createItemDTO) {
+        itemService.saveItem(createItemDTO.getTitle(), createItemDTO.getPrice(),
+            createItemDTO.getImageUrl());
 
         return ResponseEntity.ok().build();
     }
