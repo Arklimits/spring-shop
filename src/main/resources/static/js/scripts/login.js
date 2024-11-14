@@ -22,6 +22,7 @@ function loginJWT() {
   }).then(({status, body}) => {
     if (status === 200) {
       document.getElementById('error-message').style.display = 'none';
+      localStorage.setItem('jwt', body.jwt);
       window.history.back(); // 로그인 성공 시 이전 페이지로 돌아가기
     } else if (status === 401) {
       document.getElementById('error-message').textContent = body.message
