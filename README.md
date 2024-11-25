@@ -8,7 +8,7 @@
 
 ### 📅 개발 기간
 
-2024.09.13 ~ 개발중
+2024.09.13 ~ 2024.11.25
 
 ### 🔧 서비스 구조도
 
@@ -46,7 +46,7 @@
 
 ### 🌐 프로젝트 링크
 
-* [Spring Shop 프로젝트 배포 링크](http://ark-test.ap-northeast-2.elasticbeanstalk.com/)
+* ~~[Spring Shop 프로젝트 배포 링크](http://ark-test.ap-northeast-2.elasticbeanstalk.com/)~~
 
 ---
 
